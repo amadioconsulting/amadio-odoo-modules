@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
+
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
+
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
+
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
+
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Contract Lifecycle & Renewal Manager</h1>
+      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+    </div>
+    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+  </div>
+</div>
+
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Silent Contract Renewals</div>
+            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Manual Contract Calendar</div>
+            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">No Amendment History</div>
+            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-content">
+                <h4>Renewal Alert Engine</h4>
+                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-content">
+                <h4>Full Lifecycle States</h4>
+                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-content">
+                <h4>Auto-Renew Flag</h4>
+                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-content">
+                <h4>Amendment Tracking</h4>
+                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-content">
+                <h4>Stakeholder Notifications</h4>
+                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-content">
+                <h4>Linked to Sales Orders</h4>
+                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+            </div>
+        </div></div>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#2980b9">1</div>
+            <h4>Register Your Contracts</h4>
+            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#2980b9">2</div>
+            <h4>System Monitors Expiry</h4>
+            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#2980b9">3</div>
+            <h4>Renew or Terminate</h4>
+            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏢</div>
+            <h4>Corporate Legal Teams</h4>
+            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🤝</div>
+            <h4>SaaS & Subscription Businesses</h4>
+            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏗️</div>
+            <h4>Real Estate & Facilities</h4>
+            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
+</div>
+
+</body>
+</html>
