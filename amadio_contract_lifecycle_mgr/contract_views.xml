@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Contract: list view -->
+    <record id="view_contract_contract_list" model="ir.ui.view">
+        <field name="name">contract.contract.list</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <list string="Contracts" decoration-warning="days_to_expiry &gt; 0 and days_to_expiry &lt;= renewal_notice_days" decoration-danger="days_to_expiry &lt; 0" decoration-success="state == 'active'" decoration-muted="state in ('expired','terminated')">
+                <field name="ref"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="contract_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="days_to_expiry"/>
+                <field name="value"/>
+                <field name="currency_id"/>
+                <field name="owner_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Contract: form view -->
+    <record id="view_contract_contract_form" model="ir.ui.view">
+        <field name="name">contract.contract.form</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contract">
+                <header>
+                    <button name="action_renew" type="object" string="Renew" class="oe_highlight" invisible="state in ('renewed','expired','terminated')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,pending_renewal,renewed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Master Services Agreement — Acme Corp"/></h1>
+                    </div>
+                    <group>
+                        <group string="Parties">
+                            <field name="ref"/>
+                            <field name="partner_id"/>
+                            <field name="contract_type"/>
+                            <field name="owner_id"/>
+                            <field name="legal_contact_id"/>
+                        </group>
+                        <group string="Term">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="days_to_expiry"/>
+                            <field name="renewal_notice_days"/>
+                            <field name="renewal_alert_date"/>
+                            <field name="auto_renew"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Commercials">
+                            <field name="value"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group string="Alerts">
+                            <field name="alert_partner_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Amendments" name="amendments">
+                            <field name="amendment_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="attachment_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Related Sales Orders" name="sale_orders">
+                            <field name="sale_order_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Contract: search view -->
+    <record id="view_contract_contract_search" model="ir.ui.view">
+        <field name="name">contract.contract.search</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <search string="Search Contracts">
+                <field name="name"/>
+                <field name="ref"/>
+                <field name="partner_id"/>
+                <field name="owner_id"/>
+                <separator/>
+                <filter name="filter_active" string="Active" domain="[('state','=','active')]"/>
+                <filter name="filter_pending_renewal" string="Pending Renewal" domain="[('state','=','pending_renewal')]"/>
+                <filter name="filter_expiring_soon" string="Expiring in 90 Days" domain="[('days_to_expiry','&gt;=',0),('days_to_expiry','&lt;=',90)]"/>
+                <filter name="filter_expired" string="Expired" domain="[('state','=','expired')]"/>
+                <filter name="filter_auto_renew" string="Auto-Renew" domain="[('auto_renew','=',True)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'contract_type'}"/>
+                    <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_partner" string="Party" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Contract: kanban view -->
+    <record id="view_contract_contract_kanban" model="ir.ui.view">
+        <field name="name">contract.contract.kanban</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="end_date"/>
+                <field name="days_to_expiry"/>
+                <field name="value"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong><field name="name"/></strong>
+                                    <br/>
+                                    <small><field name="partner_id"/></small>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div>End: <field name="end_date"/></div>
+                                <div>Days to expiry: <field name="days_to_expiry"/></div>
+                                <div><field name="value"/> <field name="currency_id"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Contract: action -->
+    <record id="action_contract_contract" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="res_model">contract.contract</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_contract_contract_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first contract</p>
+            <p>Track the contracts you have with customers, vendors and employees in one place. Configure renewal notice windows and never miss a deadline again.</p>
+        </field>
+    </record>
+
+    <!-- Amendment: list view -->
+    <record id="view_contract_amendment_list" model="ir.ui.view">
+        <field name="name">contract.amendment.list</field>
+        <field name="model">contract.amendment</field>
+        <field name="arch" type="xml">
+            <list string="Amendments">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Amendment: form view -->
+    <record id="view_contract_amendment_form" model="ir.ui.view">
+        <field name="name">contract.amendment.form</field>
+        <field name="model">contract.amendment</field>
+        <field name="arch" type="xml">
+            <form string="Amendment">
+                <sheet>
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="attachment_id"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Amendment: action -->
+    <record id="action_contract_amendment" model="ir.actions.act_window">
+        <field name="name">Amendments</field>
+        <field name="res_model">contract.amendment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
