@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_contract_root"
+              name="Contracts"
+              sequence="60"/>
+
+    <menuitem id="menu_contract_operations"
+              name="Operations"
+              parent="menu_contract_root"
+              sequence="10"/>
+
+    <menuitem id="menu_contract_contract"
+              name="Contracts"
+              parent="menu_contract_operations"
+              action="action_contract_contract"
+              sequence="10"/>
+
+    <menuitem id="menu_contract_amendment"
+              name="Amendments"
+              parent="menu_contract_operations"
+              action="action_contract_amendment"
+              sequence="20"/>
+
+</odoo>
