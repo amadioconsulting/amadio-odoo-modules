@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Menu item under Calendar > Configuration -->
+        <menuitem id="menu_calendar_sync_rule"
+                  name="Sync Rules"
+                  parent="calendar.menu_calendar_configuration"
+                  action="calendar_sync_rule_action"
+                  sequence="50"/>
+
+    </data>
+</odoo>

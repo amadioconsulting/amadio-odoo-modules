@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Document Version List View -->
+    <record id="view_document_version_tree" model="ir.ui.view">
+        <field name="name">document.version.tree</field>
+        <field name="model">document.version</field>
+        <field name="arch" type="xml">
+            <tree string="Document Versions" sample="1">
+                <field name="name" widget="char"/>
+                <field name="version_number" widget="char"/>
+                <field name="author_id" widget="many2one"/>
+                <field name="date" widget="datetime"/>
+                <field name="state" widget="badge" decoration-success="state=='active'" decoration-warning="state=='draft'" decoration-muted="state=='superseded'" decoration-danger="state=='rejected'"/>
+                <field name="file_name" widget="char"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Document Version Form View -->
+    <record id="view_document_version_form" model="ir.ui.view">
+        <field name="name">document.version.form</field>
+        <field name="model">document.version</field>
+        <field name="arch" type="xml">
+            <form string="Document Version" sample="1">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_reject" type="object" string="Reject" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_supersede" type="object" string="Mark Superseded" attrs="{'invisible': [('state', 'in', ['superseded', 'rejected'])]}"/>
+                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_document_versions" type="object" class="oe_stat_button" icon="fa-list" attrs="{'invisible': [('res_model', '=', False)]}">
+                            <field name="document_version_count" widget="statinfo" string="All Versions"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Document Title"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="version_number" placeholder="e.g., 1.0, 2.3, Rev-A"/>
+                            <field name="version_label" readonly="1"/>
+                            <field name="author_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="res_model" readonly="1"/>
+                            <field name="res_id" readonly="1"/>
+                            <field name="attachment_id" readonly="1"/>
+                            <field name="file_name" readonly="1"/>
+                            <field name="file_size" readonly="1" widget="char"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="approval_required"/>
+                            <field name="approved_by_id" readonly="1" attrs="{'invisible': [('approved_by_id', '=', False)]}"/>
+                            <field name="previous_version_id" readonly="1" attrs="{'invisible': [('previous_version_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Change notes..."/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    <field name="message_follower_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Document Version Action Window -->
+    <record id="action_document_version" model="ir.actions.act_window">
+        <field name="name">Document Versions</field>
+        <field name="res_model">document.version</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No document versions found. Create your first versioned document.
+            </p>
+        </field>
+    </record>
+
+    <!-- Upload Wizard Form View -->
+    <record id="view_document_version_upload_wizard_form" model="ir.ui.view">
+        <field name="name">document.version.upload.wizard.form</field>
+        <field name="model">document.version.upload.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Upload Document Version">
+                <group>
+                    <field name="res_model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="name" placeholder="Document Title (e.g., Contract, SOP, Proposal)"/>
+                    <field name="version_number" placeholder="Optional: version number (e.g., 1.0, 2.3, Rev-A)"/>
+                </group>
+                <group>
+                    <field name="attachment" widget="binary" filename="attachment_filename" required="1"/>
+                    <field name="attachment_filename" placeholder="Filename"/>
+                </group>
+                <group>
+                    <field name="notes" placeholder="What changed in this version? (optional)"/>
+                </group>
+                <group>
+                    <field name="approval_required"/>
+                </group>
+                <footer>
+                    <button name="action_upload" type="object" string="Upload Version" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Smart Button Template for Mixin Models -->
+    <template id="document_version_button_box" name="Document Version Smart Button">
+        <div class="oe_button_box" name="document_version_box" attrs="{'invisible': [('document_version_count', '=', 0)]}">
+            <button name="action_open_document_versions" type="object" class="oe_stat_button" icon="fa-file-text">
+                <field name="document_version_count" widget="statinfo" string="Versions"/>
+            </button>
+        </div>
+    </template>
+
+    <!-- Menu Items -->
+    <menuitem
+        id="menu_document_version_root"
+        name="Document Versions"
+        parent="mail.mail_menu_root"
+        action="action_document_version"
+        sequence="25"/>
+
+</odoo>

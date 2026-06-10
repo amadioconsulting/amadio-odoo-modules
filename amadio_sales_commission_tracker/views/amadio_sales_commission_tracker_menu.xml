@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_sales_commission_tracker_root" name="Sales Commission Tracker" sequence="60"/>
+
+    <menuitem id="menu_amadio_sales_commission_tracker_operations" name="Operations"
+              parent="menu_amadio_sales_commission_tracker_root" sequence="10"/>
+
+    <menuitem id="menu_commission_plan" name="Commission Plan"
+              parent="menu_amadio_sales_commission_tracker_operations"
+              action="action_commission_plan" sequence="10"/>
+
+    <menuitem id="menu_commission_rule" name="Commission Rule"
+              parent="menu_amadio_sales_commission_tracker_operations"
+              action="action_commission_rule" sequence="20"/>
+
+    <menuitem id="menu_commission_statement" name="Commission Statement"
+              parent="menu_amadio_sales_commission_tracker_operations"
+              action="action_commission_statement" sequence="30"/>
+
+    <menuitem id="menu_commission_statement_line" name="Commission Statement Line"
+              parent="menu_amadio_sales_commission_tracker_operations"
+              action="action_commission_statement_line" sequence="40"/>
+
+</odoo>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- SOP CHECKLIST LIST VIEW -->
+    <record id="sop_checklist_view_list" model="ir.ui.view">
+        <field name="name">sop.checklist.list</field>
+        <field name="model">sop.checklist</field>
+        <field name="arch" type="xml">
+            <tree string="SOP Checklists">
+                <field name="name" />
+                <field name="template_id" />
+                <field name="res_model" />
+                <field name="res_name" />
+                <field name="completion_pct" widget="progressbar" />
+                <field name="steps_done" />
+                <field name="steps_total" />
+                <field name="state" widget="badge" decoration-success="state == 'completed'" decoration-warning="state == 'in_progress'" decoration-muted="state == 'cancelled'" />
+                <field name="date_started" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- SOP CHECKLIST FORM VIEW -->
+    <record id="sop_checklist_view_form" model="ir.ui.view">
+        <field name="name">sop.checklist.form</field>
+        <field name="model">sop.checklist</field>
+        <field name="arch" type="xml">
+            <form string="SOP Checklist">
+                <header>
+                    <button name="action_complete" type="object" string="Mark Complete" class="oe_highlight" states="in_progress" />
+                    <button name="action_reopen" type="object" string="Reopen" states="completed,cancelled" />
+                    <button name="action_cancel" type="object" string="Cancel" states="in_progress" />
+                    <button name="action_open_linked_record" type="object" string="Open Linked Record" class="btn-secondary" />
+                    <field name="state" widget="statusbar" />
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_linked_record" type="object" class="oe_stat_button" icon="fa-external-link">
+                            <span>Go to Record</span>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+
+                    <!-- CRITICAL STEPS WARNING BANNER -->
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': [('critical_steps_pending', '=', False)]}">
+                        <strong>Critical Steps Pending!</strong> This checklist has critical steps that must be completed before marking it complete.
+                    </div>
+
+                    <!-- COMPLETION PROGRESS -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <group>
+                                <field name="template_id" readonly="1" />
+                                <field name="res_model" readonly="1" />
+                                <field name="res_id" readonly="1" />
+                                <field name="res_name" readonly="1" />
+                            </group>
+                        </div>
+                        <div class="col-md-6">
+                            <group>
+                                <field name="started_by_id" readonly="1" />
+                                <field name="date_started" readonly="1" />
+                                <field name="date_completed" readonly="1" />
+                            </group>
+                        </div>
+                    </div>
+
+                    <!-- PROGRESS BAR -->
+                    <div class="o_progress_container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Completion Progress</h4>
+                                <div class="progress">
+                                    <div
+                                        class="progress-bar"
+                                        style="width: "
+                                        attrs="{'style': 'width: ' + str(completion_pct) + '%;'}"
+                                    >
+                                        <span class="text-white"><field name="completion_pct" widget="float" readonly="1" /> %</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted">
+                                    <field name="steps_done" readonly="1" /> of <field name="steps_total" readonly="1" /> steps completed
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CHECKLIST STEPS -->
+                    <notebook>
+                        <page string="Checklist Steps" name="steps">
+                            <field name="step_ids" mode="tree">
+                                <tree string="Steps">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" readonly="1" />
+                                    <field name="is_critical" readonly="1" widget="boolean" />
+                                    <field name="requires_evidence" readonly="1" widget="boolean" />
+                                    <field name="done" widget="boolean_toggle" />
+                                    <field name="done_by_id" readonly="1" />
+                                    <field name="done_date" readonly="1" />
+                                    <field name="notes" />
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- STEP DETAILS VIEW (form mode) -->
+                        <page string="Step Details" name="step_details">
+                            <field name="step_ids" nolabel="1" mode="form">
+                                <form string="Step">
+                                    <group>
+                                        <group>
+                                            <field name="sequence" />
+                                            <field name="name" readonly="1" />
+                                            <field name="done" widget="boolean_toggle" />
+                                            <field name="is_critical" readonly="1" widget="boolean" />
+                                            <field name="requires_evidence" readonly="1" widget="boolean" />
+                                        </group>
+                                        <group>
+                                            <field name="done_by_id" readonly="1" />
+                                            <field name="done_date" readonly="1" />
+                                            <field name="evidence_attachment_id" />
+                                        </group>
+                                    </group>
+
+                                    <field name="description" readonly="1" />
+                                    <field name="notes" placeholder="Add notes about this step..." />
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}" />
+                    <field name="activity_ids" widget="mail_activity" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- SOP CHECKLIST SEARCH VIEW -->
+    <record id="sop_checklist_view_search" model="ir.ui.view">
+        <field name="name">sop.checklist.search</field>
+        <field name="model">sop.checklist</field>
+        <field name="arch" type="xml">
+            <search string="SOP Checklists">
+                <field name="name" />
+                <field name="template_id" />
+                <field name="res_model" />
+                <field name="res_name" />
+                <field name="started_by_id" />
+                <separator />
+                <filter name="in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]" />
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]" />
+                <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]" />
+                <separator />
+                <filter name="critical_pending" string="Has Critical Steps Pending" domain="[('critical_steps_pending', '=', True)]" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter name="group_template" string="Template" context="{'group_by': 'template_id'}" />
+                    <filter name="group_model" string="Model" context="{'group_by': 'res_model'}" />
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}" />
+                    <filter name="group_date" string="Started Date" context="{'group_by': 'date_started'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- LAUNCH WIZARD FORM VIEW -->
+    <record id="sop_launch_checklist_wizard_view_form" model="ir.ui.view">
+        <field name="name">sop.launch.checklist.wizard.form</field>
+        <field name="model">sop.launch.checklist.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Launch SOP Checklist">
+                <group>
+                    <group>
+                        <field name="template_id" required="1" />
+                    </group>
+                    <group>
+                        <field name="res_model" required="1" />
+                        <field name="res_id" required="1" />
+                        <field name="res_name" readonly="1" />
+                    </group>
+                </group>
+
+                <field name="notes" placeholder="Optional launch notes..." />
+
+                <footer>
+                    <button name="action_launch" type="object" string="Launch Checklist" class="oe_highlight" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION: SOP CHECKLISTS -->
+    <record id="action_sop_checklist" model="ir.actions.act_window">
+        <field name="name">SOP Checklists</field>
+        <field name="res_model">sop.checklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="sop_checklist_view_search" />
+        <field name="context">{'search_default_in_progress': 1}</field>
+    </record>
+
+    <!-- ACTION: LAUNCH WIZARD -->
+    <record id="action_sop_launch_checklist_wizard" model="ir.actions.act_window">
+        <field name="name">Launch SOP Checklist</field>
+        <field name="res_model">sop.launch.checklist.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- SUBMENU: SOP CHECKLISTS -->
+    <menuitem
+        id="menu_sop_checklist"
+        name="Active Checklists"
+        action="action_sop_checklist"
+        parent="menu_sop_root"
+        sequence="20"
+    />
+
+</odoo>

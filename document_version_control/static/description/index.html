@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
-<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<title>Document Version Control — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Track every version of every document on any Odoo record — with approval workflows, revision history, and supersession management.">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
@@ -13,10 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 .brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
 .brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
 .brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
-.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+.brand-url { color: #3498db; font-size: 14px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #3498db; }
 .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
 .hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
@@ -72,7 +72,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 /* Footer */
 .footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
 .footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-tagline { color: #3498db; font-size: 14px; font-style: italic; margin-bottom: 16px; }
 .footer-info { font-size: 13px; }
 </style>
 </head>
@@ -91,10 +91,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Contract Lifecycle & Renewal Manager</h1>
-      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+      <h1>Document Version Control</h1>
+      <p>Track every version of every document on any Odoo record — with approval workflows, revision history, and supersession management.</p>
     </div>
-    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+    <div class="badges"><span class="badge">Full Version Lifecycle</span><span class="badge">Approval Workflow</span><span class="badge">Any Odoo Model</span><span class="badge">Complete Audit Trail</span></div>
   </div>
 </div>
 
@@ -102,19 +102,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-white">
   <div class="section-inner">
     <h2>The Challenge</h2>
-    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Why organizations need Document Version Control</p>
     <div class="problems-grid">
         <div class="problem-card">
-            <div class="problem-title">Silent Contract Renewals</div>
-            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+            <div class="problem-title">Version Confusion</div>
+            <p>Teams share documents via attachments with names like 'Contract_v3_FINAL_revised.pdf'. There's no system record of which version is current or who approved it.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">Manual Contract Calendar</div>
-            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+            <div class="problem-title">No Approval Enforcement</div>
+            <p>Important documents — contracts, SOPs, specs — are updated without any review process. Unapproved versions go live accidentally.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">No Amendment History</div>
-            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+            <div class="problem-title">Lost History</div>
+            <p>When a document is updated, the old version is overwritten. There's no way to retrieve what the document said six months ago or who made specific changes.</p>
         </div></div>
   </div>
 </div>
@@ -122,49 +122,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <!-- Features -->
 <div class="section section-gray">
   <div class="section-inner">
-    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <h2>What Document Version Control Does</h2>
     <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-icon" style="background:#3498db">📄</div>
             <div class="feature-content">
-                <h4>Renewal Alert Engine</h4>
-                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+                <h4>Full Version Lifecycle</h4>
+                <p>Documents move through states: Draft → Active → Superseded or Rejected. Only one version can be Active at a time per document record.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-icon" style="background:#3498db">✅</div>
             <div class="feature-content">
-                <h4>Full Lifecycle States</h4>
-                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+                <h4>Approval Workflow</h4>
+                <p>Drafts can require approval before going Active. Approvers are notified automatically. Rejection includes a reason logged on the version record.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-icon" style="background:#3498db">📎</div>
             <div class="feature-content">
-                <h4>Auto-Renew Flag</h4>
-                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+                <h4>Any Odoo Model</h4>
+                <p>The document.version.mixin can be attached to any Odoo model — sale orders, purchase orders, projects, employees, or custom models.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-icon" style="background:#3498db">🔗</div>
             <div class="feature-content">
-                <h4>Amendment Tracking</h4>
-                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+                <h4>Version Chain</h4>
+                <p>Each version links to its predecessor via previous_version_id — creating a complete, navigable chain of document history.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-icon" style="background:#3498db">👤</div>
             <div class="feature-content">
-                <h4>Stakeholder Notifications</h4>
-                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+                <h4>Author & Approver Tracking</h4>
+                <p>Every version records who created it and who approved it. The complete audit trail is always visible on the version record.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-icon" style="background:#3498db">📂</div>
             <div class="feature-content">
-                <h4>Linked to Sales Orders</h4>
-                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+                <h4>Upload Wizard</h4>
+                <p>A clean upload wizard lets users attach new document files, add notes, and optionally request approval — all in one step.</p>
             </div>
         </div></div>
   </div>
@@ -177,19 +177,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
     <p class="section-sub">Operational in minutes — not weeks</p>
     <div class="steps-grid">
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">1</div>
-            <h4>Register Your Contracts</h4>
-            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+            <div class="step-number" style="background:#3498db">1</div>
+            <h4>Attach Document Version Control</h4>
+            <p>Use the Upload Wizard to create version 1 of any document on any Odoo record. Add notes and choose whether approval is required.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">2</div>
-            <h4>System Monitors Expiry</h4>
-            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+            <div class="step-number" style="background:#3498db">2</div>
+            <h4>Route for Approval</h4>
+            <p>If approval is enabled, the designated approver is notified. They review the document and approve or reject with a reason. The state updates automatically.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">3</div>
-            <h4>Renew or Terminate</h4>
-            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+            <div class="step-number" style="background:#3498db">3</div>
+            <h4>Supersede When Updated</h4>
+            <p>When a new version is ready, upload it and the previous Active version is automatically marked Superseded — keeping the full history intact.</p>
         </div></div>
   </div>
 </div>
@@ -198,22 +198,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-gray">
   <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Industries and organizations that rely on Document Version Control</p>
     <div class="usecases-grid">
         <div class="usecase-card">
-            <div class="usecase-icon">🏢</div>
-            <h4>Corporate Legal Teams</h4>
-            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
+            <div class="usecase-icon">📝</div>
+            <h4>Contract Management</h4>
+            <p>Legal teams track every contract revision with full approval history. The Active version is always clearly identified, and the full negotiation trail is preserved.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏭</div>
+            <h4>Manufacturing SOPs</h4>
+            <p>Quality teams manage SOP versions with mandatory approval before any procedure goes live. Operators always access the current approved version.</p>
         </div>
         <div class="usecase-card">
             <div class="usecase-icon">🤝</div>
-            <h4>SaaS & Subscription Businesses</h4>
-            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
-        </div>
-        <div class="usecase-card">
-            <div class="usecase-icon">🏗️</div>
-            <h4>Real Estate & Facilities</h4>
-            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+            <h4>Vendor Documents</h4>
+            <p>Procurement teams track vendor certificates, insurance docs, and compliance certificates — knowing when each was last approved and when it expires.</p>
         </div></div>
   </div>
 </div>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
-<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<title>SOP Checklist Builder — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Build reusable SOP templates and launch live checklists on any Odoo record — with critical step enforcement, evidence capture, and completion tracking.">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
@@ -13,10 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 .brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
 .brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
 .brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
-.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+.brand-url { color: #8e44ad; font-size: 14px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #8e44ad; }
 .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
 .hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
@@ -72,7 +72,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 /* Footer */
 .footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
 .footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-tagline { color: #8e44ad; font-size: 14px; font-style: italic; margin-bottom: 16px; }
 .footer-info { font-size: 13px; }
 </style>
 </head>
@@ -91,10 +91,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Contract Lifecycle & Renewal Manager</h1>
-      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+      <h1>SOP Checklist Builder</h1>
+      <p>Build reusable SOP templates and launch live checklists on any Odoo record — with critical step enforcement, evidence capture, and completion tracking.</p>
     </div>
-    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+    <div class="badges"><span class="badge">Reusable Templates</span><span class="badge">Critical Step Blocking</span><span class="badge">Evidence Attachments</span><span class="badge">Works on Any Record</span></div>
   </div>
 </div>
 
@@ -102,19 +102,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-white">
   <div class="section-inner">
     <h2>The Challenge</h2>
-    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Why organizations need SOP Checklist Builder</p>
     <div class="problems-grid">
         <div class="problem-card">
-            <div class="problem-title">Silent Contract Renewals</div>
-            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+            <div class="problem-title">SOPs Live in Binders</div>
+            <p>Standard operating procedures are documented in PDFs and binders — completely disconnected from the Odoo records where the work actually happens.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">Manual Contract Calendar</div>
-            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+            <div class="problem-title">No Completion Enforcement</div>
+            <p>Checklists in shared drives or printed forms can be submitted as 'done' without every step being completed. Critical steps get skipped.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">No Amendment History</div>
-            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+            <div class="problem-title">No Evidence Capture</div>
+            <p>Regulated processes require proof that steps were completed. Without an evidence attachment requirement, compliance cannot be demonstrated.</p>
         </div></div>
   </div>
 </div>
@@ -122,49 +122,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <!-- Features -->
 <div class="section section-gray">
   <div class="section-inner">
-    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <h2>What SOP Checklist Builder Does</h2>
     <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-icon" style="background:#8e44ad">📋</div>
             <div class="feature-content">
-                <h4>Renewal Alert Engine</h4>
-                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+                <h4>Reusable SOP Templates</h4>
+                <p>Define sop.template records with steps, sequences, criticality flags, and evidence requirements. Templates are reused across hundreds of checklist instances.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-icon" style="background:#8e44ad">🚨</div>
             <div class="feature-content">
-                <h4>Full Lifecycle States</h4>
-                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+                <h4>Critical Step Enforcement</h4>
+                <p>Steps marked as critical must be completed before the checklist can be marked Done. The completion button is blocked until all critical steps are checked off.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-icon" style="background:#8e44ad">📎</div>
             <div class="feature-content">
-                <h4>Auto-Renew Flag</h4>
-                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+                <h4>Evidence Attachments</h4>
+                <p>Steps can require an evidence attachment — a photo, scan, or measurement record. The step cannot be marked done without an attachment uploaded.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-icon" style="background:#8e44ad">👤</div>
             <div class="feature-content">
-                <h4>Amendment Tracking</h4>
-                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+                <h4>Step-Level Accountability</h4>
+                <p>Each step records who marked it done and when. The done_by_id and done_date fields provide a full accountability trail.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-icon" style="background:#8e44ad">📊</div>
             <div class="feature-content">
-                <h4>Stakeholder Notifications</h4>
-                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+                <h4>Completion Metrics</h4>
+                <p>The checklist form shows real-time completion percentage, steps done vs. total, and whether any critical steps remain pending.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-icon" style="background:#8e44ad">🚀</div>
             <div class="feature-content">
-                <h4>Linked to Sales Orders</h4>
-                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+                <h4>Launch from Any Record</h4>
+                <p>The SOP Launch Wizard can attach a checklist to any Odoo record — sale orders, projects, manufacturing orders, service tickets, or custom models.</p>
             </div>
         </div></div>
   </div>
@@ -177,19 +177,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
     <p class="section-sub">Operational in minutes — not weeks</p>
     <div class="steps-grid">
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">1</div>
-            <h4>Register Your Contracts</h4>
-            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+            <div class="step-number" style="background:#8e44ad">1</div>
+            <h4>Build Your Template</h4>
+            <p>In Project → SOP Templates, create a template with all required steps. Mark critical steps, set evidence requirements, and assign default responsible roles.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">2</div>
-            <h4>System Monitors Expiry</h4>
-            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+            <div class="step-number" style="background:#8e44ad">2</div>
+            <h4>Launch on a Record</h4>
+            <p>From any Odoo record, click Launch SOP Checklist. Select the template, confirm the start date, and a live checklist instance is created immediately.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">3</div>
-            <h4>Renew or Terminate</h4>
-            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+            <div class="step-number" style="background:#8e44ad">3</div>
+            <h4>Work Through the Steps</h4>
+            <p>Team members complete steps on the live checklist — marking done, attaching evidence, adding notes. The system tracks completion and enforces critical step requirements.</p>
         </div></div>
   </div>
 </div>
@@ -198,22 +198,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-gray">
   <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Industries and organizations that rely on SOP Checklist Builder</p>
     <div class="usecases-grid">
         <div class="usecase-card">
-            <div class="usecase-icon">🏢</div>
-            <h4>Corporate Legal Teams</h4>
-            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
+            <div class="usecase-icon">🏭</div>
+            <h4>Quality Control</h4>
+            <p>Manufacturing teams launch QC checklists on each production order. Critical inspection steps require evidence photos before the order can be released.</p>
         </div>
         <div class="usecase-card">
-            <div class="usecase-icon">🤝</div>
-            <h4>SaaS & Subscription Businesses</h4>
-            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
+            <div class="usecase-icon">🚢</div>
+            <h4>Onboarding & Offboarding</h4>
+            <p>HR launches employee onboarding checklists covering IT setup, policy acknowledgment, and access provisioning — all tracked with completion accountability.</p>
         </div>
         <div class="usecase-card">
-            <div class="usecase-icon">🏗️</div>
-            <h4>Real Estate & Facilities</h4>
-            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+            <div class="usecase-icon">🔧</div>
+            <h4>Field Service</h4>
+            <p>Service technicians complete mandatory safety checklists before starting and completing service calls — with evidence attachments proving compliance.</p>
         </div></div>
   </div>
 </div>

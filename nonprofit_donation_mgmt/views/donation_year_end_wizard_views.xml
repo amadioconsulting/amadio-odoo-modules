@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View for Year-End Wizard -->
+        <record id="donation_year_end_wizard_form" model="ir.ui.view">
+            <field name="name">donation.year.end.wizard.form</field>
+            <field name="model">donation.year.end.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Year-End Donation Statement">
+                    <group>
+                        <group>
+                            <field name="donor_id" required="1" />
+                            <field name="year" required="1" />
+                        </group>
+                        <group>
+                            <field name="donation_count" readonly="1" />
+                            <field name="total_donations" readonly="1" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_generate_statement" type="object" string="Generate PDF Statement" class="btn-primary" />
+                        <button string="Close" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action for Year-End Wizard -->
+        <record id="donation_year_end_wizard_action" model="ir.actions.act_window">
+            <field name="name">Year-End Donation Statement</field>
+            <field name="res_model">donation.year.end.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p>Generate year-end donation statements for donors.</p>
+            </field>
+        </record>
+
+        <!-- Menu for Year-End Reports -->
+        <menuitem id="donation_reports_menu" name="Reports" parent="donation_donation_menu" sequence="10" />
+        <menuitem id="donation_year_end_menu" name="Year-End Statements" action="donation_year_end_wizard_action" parent="donation_reports_menu" sequence="1" />
+
+    </data>
+</odoo>

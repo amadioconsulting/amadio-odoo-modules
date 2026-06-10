@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_commission_plan_list" model="ir.ui.view">
+        <field name="name">commission.plan.list</field>
+        <field name="model">commission.plan</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commission_plan_form" model="ir.ui.view">
+        <field name="name">commission.plan.form</field>
+        <field name="model">commission.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rules" name="rule_ids">
+                            <field name="rule_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commission_plan_search" model="ir.ui.view">
+        <field name="name">commission.plan.search</field>
+        <field name="model">commission.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_commission_plan" model="ir.actions.act_window">
+        <field name="name">Commission Plan</field>
+        <field name="res_model">commission.plan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_commission_rule_list" model="ir.ui.view">
+        <field name="name">commission.rule.list</field>
+        <field name="model">commission.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="plan_id"/>
+                <field name="name"/>
+                <field name="commission_type"/>
+                <field name="rate"/>
+                <field name="product_category_id"/>
+                <field name="min_amount"/>
+                <field name="based_on"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commission_rule_form" model="ir.ui.view">
+        <field name="name">commission.rule.form</field>
+        <field name="model">commission.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="plan_id"/>
+                            <field name="commission_type"/>
+                            <field name="rate"/>
+                        </group>
+                        <group>
+                            <field name="product_category_id"/>
+                            <field name="min_amount"/>
+                            <field name="based_on"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commission_rule_search" model="ir.ui.view">
+        <field name="name">commission.rule.search</field>
+        <field name="model">commission.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_commission_rule" model="ir.actions.act_window">
+        <field name="name">Commission Rule</field>
+        <field name="res_model">commission.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_commission_statement_list" model="ir.ui.view">
+        <field name="name">commission.statement.list</field>
+        <field name="model">commission.statement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="user_id"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="state"/>
+                <field name="total_commission"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commission_statement_form" model="ir.ui.view">
+        <field name="name">commission.statement.form</field>
+        <field name="model">commission.statement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="period_start"/>
+                        </group>
+                        <group>
+                            <field name="period_end"/>
+                            <field name="total_commission"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="line_ids">
+                            <field name="line_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commission_statement_search" model="ir.ui.view">
+        <field name="name">commission.statement.search</field>
+        <field name="model">commission.statement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <filter name="filter_state_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="filter_state_submitted" string="Submitted" domain="[('state','=','submitted')]"/>
+                <filter name="filter_state_approved" string="Approved" domain="[('state','=','approved')]"/>
+                <filter name="filter_state_paid" string="Paid" domain="[('state','=','paid')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_commission_statement_kanban" model="ir.ui.view">
+        <field name="name">commission.statement.kanban</field>
+        <field name="model">commission.statement</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_commission_statement" model="ir.actions.act_window">
+        <field name="name">Commission Statement</field>
+        <field name="res_model">commission.statement</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+    <record id="view_commission_statement_line_list" model="ir.ui.view">
+        <field name="name">commission.statement.line.list</field>
+        <field name="model">commission.statement.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="statement_id"/>
+                <field name="invoice_id"/>
+                <field name="sale_id"/>
+                <field name="base_amount"/>
+                <field name="rate"/>
+                <field name="commission_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commission_statement_line_form" model="ir.ui.view">
+        <field name="name">commission.statement.line.form</field>
+        <field name="model">commission.statement.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="statement_id"/>
+                            <field name="invoice_id"/>
+                            <field name="sale_id"/>
+                        </group>
+                        <group>
+                            <field name="base_amount"/>
+                            <field name="rate"/>
+                            <field name="commission_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commission_statement_line_search" model="ir.ui.view">
+        <field name="name">commission.statement.line.search</field>
+        <field name="model">commission.statement.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="statement_id"/>
+                <field name="invoice_id"/>
+                <field name="sale_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_commission_statement_line" model="ir.actions.act_window">
+        <field name="name">Commission Statement Line</field>
+        <field name="res_model">commission.statement.line</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

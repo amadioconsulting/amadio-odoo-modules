@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_approval_tier_list" model="ir.ui.view">
+        <field name="name">purchase.approval.tier.list</field>
+        <field name="model">purchase.approval.tier</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="min_amount"/>
+                <field name="max_amount"/>
+                <field name="approver_ids" widget="many2many_tags"/>
+                <field name="require_all"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_purchase_approval_tier_form" model="ir.ui.view">
+        <field name="name">purchase.approval.tier.form</field>
+        <field name="model">purchase.approval.tier</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="min_amount"/>
+                            <field name="max_amount"/>
+                        </group>
+                        <group>
+                            <field name="approver_ids" widget="many2many_tags"/>
+                            <field name="require_all"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_purchase_approval_tier_search" model="ir.ui.view">
+        <field name="name">purchase.approval.tier.search</field>
+        <field name="model">purchase.approval.tier</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchase_approval_tier" model="ir.actions.act_window">
+        <field name="name">Purchase Approval Tier</field>
+        <field name="res_model">purchase.approval.tier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_purchase_approval_log_list" model="ir.ui.view">
+        <field name="name">purchase.approval.log.list</field>
+        <field name="model">purchase.approval.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="order_id"/>
+                <field name="approver_id"/>
+                <field name="action"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_purchase_approval_log_form" model="ir.ui.view">
+        <field name="name">purchase.approval.log.form</field>
+        <field name="model">purchase.approval.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="approver_id"/>
+                            <field name="action"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_purchase_approval_log_search" model="ir.ui.view">
+        <field name="name">purchase.approval.log.search</field>
+        <field name="model">purchase.approval.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_id"/>
+                <field name="approver_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchase_approval_log" model="ir.actions.act_window">
+        <field name="name">Purchase Approval Log</field>
+        <field name="res_model">purchase.approval.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

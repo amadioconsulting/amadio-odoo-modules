@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_meeting_minutes_user,meeting.minutes user,model_meeting_minutes,base.group_user,1,1,1,1
+access_meeting_action_item_user,meeting.action.item user,model_meeting_action_item,base.group_user,1,1,1,1

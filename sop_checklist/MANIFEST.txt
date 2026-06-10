@@ -1,0 +1,307 @@
+================================================================================
+SOP CHECKLIST BUILDER - Odoo 18.0 Module
+================================================================================
+
+MODULE TECHNICAL NAME: sop_checklist
+VERSION: 18.0.1.0.0
+AUTHOR: AMADIO (https://amadio.io)
+LICENSE: LGPL-3
+PRICE: EUR 69.00
+
+================================================================================
+FILE STRUCTURE
+================================================================================
+
+sop_checklist/
+├── __init__.py                          [Package initialization]
+├── __manifest__.py                      [Module metadata, dependencies, features]
+├── README.md                            [Complete user & developer documentation]
+├── API_REFERENCE.md                     [Detailed API reference with examples]
+├── MANIFEST.txt                         [This file]
+│
+├── models/
+│   ├── __init__.py                     [Models package initialization]
+│   ├── sop_template.py                 [Template model with action methods]
+│   ├── sop_template_step.py            [Template step model]
+│   ├── sop_checklist.py                [Checklist instance model]
+│   └── sop_checklist_step.py           [Checklist step model]
+│
+├── wizard/
+│   ├── __init__.py                     [Wizard package initialization]
+│   └── launch_checklist_wizard.py      [Launch checklist wizard]
+│
+├── security/
+│   └── ir.model.access.csv             [User group access control rules]
+│
+├── views/
+│   ├── sop_template_views.xml          [Template list/form/search views & menus]
+│   └── sop_checklist_views.xml         [Checklist list/form/search views]
+│
+└── static/
+    └── description/
+        ├── icon.png                    [256x256 module icon (PNG)]
+        └── index.html                  [Marketing page with features & FAQ]
+
+================================================================================
+INSTALLATION & DEPENDENCIES
+================================================================================
+
+Requirements:
+  - Odoo 18.0
+  - Python 3.10+
+  - PostgreSQL 13+
+  - mail module (for Chatter & threading)
+  - base module (standard)
+
+Installation Steps:
+  1. Copy sop_checklist/ to your Odoo addons directory
+  2. Update module list: Settings > Apps > Update Apps List
+  3. Search for "SOP Checklist Builder"
+  4. Click Install
+
+================================================================================
+CORE FEATURES
+================================================================================
+
+Template Management
+  • Create unlimited reusable SOP templates
+  • Organize by category, code, description
+  • Define step-by-step instructions
+  • Mark steps as critical (blocks workflow if not done)
+  • Require evidence attachments for compliance
+  • Optionally restrict templates to specific Odoo models
+  • Duplicate templates for quick variations
+
+Checklist Execution
+  • One-click launch any template on a record (any Odoo model)
+  • Template steps automatically copied to checklist instance
+  • Real-time completion percentage & progress bar
+  • Step counts (done / total)
+  • Live checklist instance linked to record
+
+Step Completion Tracking
+  • Mark steps done individually with checkbox
+  • Auto-records user and timestamp
+  • Optional evidence attachment per step
+  • Notes field for step-level comments
+  • Critical step warning banner prevents premature completion
+  • Can reopen or cancel checklists
+
+Audit Trail & Compliance
+  • Complete timestamp and user tracking per step
+  • Evidence attachment management
+  • Message thread for process communication
+  • Workflow blocking on critical steps
+  • Completion state management (in_progress, completed, cancelled)
+  • Non-repudiation via immutable message thread
+
+Integration
+  • Works with any Odoo model (sales orders, projects, pickings, etc.)
+  • Supports custom models
+  • Mail module integration for notifications
+  • Activity tracking with Chatter
+  • Print-ready checklists
+
+================================================================================
+DATA MODELS
+================================================================================
+
+sop.template
+  Main template model defining SOP structure.
+  Fields: name, code, category, description, step_ids, step_count, 
+          critical_step_count, active, applicable_models, checklist_count
+  Methods: action_launch(), action_duplicate_template(), action_view_checklists(),
+           get_applicable_models(), is_applicable_to_model()
+
+sop.template.step
+  Individual step in template.
+  Fields: template_id, sequence, name, description, is_critical, 
+          requires_evidence, responsible_role, estimated_minutes
+
+sop.checklist
+  Live checklist instance created from template.
+  Fields: name, template_id, res_model, res_id, res_name, state, step_ids,
+          completion_pct, steps_done, steps_total, critical_steps_pending,
+          started_by_id, date_started, date_completed
+  Methods: action_complete(), action_cancel(), action_reopen(),
+           get_linked_record(), action_open_linked_record()
+
+sop.checklist.step
+  Individual step in a checklist instance tracking completion.
+  Fields: checklist_id, sequence, name, description, is_critical,
+          requires_evidence, done, done_by_id, done_date,
+          evidence_attachment_id, notes
+  Auto-behavior: When marked done, auto-sets done_by_id and done_date
+
+sop.launch.checklist.wizard
+  Transient wizard for launching templates on records.
+  Fields: template_id, res_model, res_id, res_name, notes
+  Methods: action_launch()
+
+================================================================================
+USAGE EXAMPLES
+================================================================================
+
+1. Create an Onboarding Template
+   - SOP Checklist > Templates > Create
+   - Name: "Employee Onboarding"
+   - Code: "ONBOARD-01"
+   - Add steps: documents, IT setup, office space, manager sign-off
+   - Mark sign-off as Critical
+   - Save
+
+2. Launch Checklist on Contact
+   - Open SOP Template "Employee Onboarding"
+   - Click "Launch on Record"
+   - Select contact and click "Launch Checklist"
+   - New checklist instance created and opened
+
+3. Complete Checklist
+   - Review each step instruction
+   - Check completion box for each step
+   - System auto-records user and timestamp
+   - Add notes or attach evidence as needed
+   - When all critical steps done, click "Mark Complete"
+   - State changes to Completed, date_completed set
+
+4. View Analytics
+   - SOP Checklist > Active Checklists
+   - Filter by state, template, model
+   - Group by template or state for analytics
+   - Click checklist to see step-by-step details
+
+================================================================================
+ACCESS CONTROL
+================================================================================
+
+Predefined Rules (in security/ir.model.access.csv):
+
+User Group:
+  - Read: sop.template, sop.template.step
+  - Read/Write/Create: sop.checklist, sop.checklist.step
+  - No Delete: checklists preserved for audit
+
+Manager/System:
+  - Full CRUD: All models
+
+Additional Groups:
+  Can be created for role-based access:
+  - Template Creators
+  - Checklist Executors
+  - Audit Managers
+
+================================================================================
+SECURITY & COMPLIANCE
+================================================================================
+
+- All checklist data stored in Odoo database with standard security
+- Access controlled via group-based access rules
+- Evidence attachments follow Odoo's attachment security model
+- Audit trail is immutable (state changes tracked, no deletion)
+- Message thread provides non-repudiation for critical steps
+- Timestamps recorded in UTC, displayed in user's timezone
+- User identification for all step completions
+
+================================================================================
+PERFORMANCE NOTES
+================================================================================
+
+- Tested with templates containing 100+ steps
+- Checklist queries indexed on template_id and state for fast filtering
+- Computed fields stored for performance (not recalculated every query)
+- Message thread may grow large for long-running checklists—periodic cleanup recommended
+- For large deployments, archive old checklists annually for database health
+
+================================================================================
+CUSTOMIZATION & EXTENSION
+================================================================================
+
+The module is built with standard Odoo patterns:
+
+1. Add custom fields to models
+2. Create custom computed fields (e.g., SLA tracking)
+3. Add validation via @api.constrains
+4. Create reports using qweb
+5. Integrate with workflows by overriding action_complete()
+6. Extend wizard for pre-launch validation
+7. Create custom templates via XML data records
+
+See API_REFERENCE.md for detailed examples.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Q: Checklist won't mark complete
+A: Review warning banner for pending critical steps. Check boxes to mark them done.
+
+Q: Template not showing in launch wizard
+A: Check "Applicable Models" field. Ensure model is in comma-separated list.
+
+Q: Evidence attachment shows as required but allows completion
+A: Current version is UI guideline. Implement custom validation if enforcement needed.
+
+Q: Timestamp shows wrong user
+A: System records user at the moment step is marked done. Ensure correct user logged in.
+
+See README.md for detailed troubleshooting.
+
+================================================================================
+TECHNICAL SPECIFICATIONS
+================================================================================
+
+Dependencies:
+  Python packages: None (uses standard Odoo)
+  Odoo modules: mail, base
+  Database: PostgreSQL 13+
+
+Inheritance:
+  - sop.template inherits from mail.thread, mail.activity.mixin
+  - sop.checklist inherits from mail.thread, mail.activity.mixin
+
+Special Features:
+  - Computed fields stored for performance
+  - SQL constraints for data integrity
+  - Onchange handlers for auto-population
+  - Context-aware default values
+  - Cascade deletion for referential integrity
+  - Message thread for audit trail
+
+Code Quality:
+  - Production-ready code
+  - Follows Odoo 18.0 standards and best practices
+  - Type hints included
+  - Full docstrings
+  - Comprehensive error handling
+  - Security-first design
+
+================================================================================
+SUPPORT & DOCUMENTATION
+================================================================================
+
+Documentation Files:
+  - README.md              - Complete user & developer guide
+  - API_REFERENCE.md       - Detailed API with code examples
+  - MANIFEST.txt          - This file (module overview)
+  - __manifest__.py       - Feature descriptions
+
+For Support:
+  - https://amadio.io
+  - AMADIO Consulting engagement
+
+================================================================================
+VERSION & LICENSE
+================================================================================
+
+Module Version: 18.0.1.0.0
+Odoo Target: 18.0
+License: LGPL-3 (Open Source)
+Price: EUR 69.00 (one-time, perpetual use)
+
+Copyright 2026 AMADIO
+Distributed via Odoo Apps Store
+https://amadio.io
+
+================================================================================
+END OF MANIFEST
+================================================================================

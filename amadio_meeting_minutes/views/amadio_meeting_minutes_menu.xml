@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_meeting_minutes_root" name="Meeting Minutes" sequence="60"/>
+
+    <menuitem id="menu_amadio_meeting_minutes_operations" name="Operations"
+              parent="menu_amadio_meeting_minutes_root" sequence="10"/>
+
+    <menuitem id="menu_meeting_minutes" name="Meeting Minutes"
+              parent="menu_amadio_meeting_minutes_operations"
+              action="action_meeting_minutes" sequence="10"/>
+
+    <menuitem id="menu_meeting_action_item" name="Meeting Action Item"
+              parent="menu_amadio_meeting_minutes_operations"
+              action="action_meeting_action_item" sequence="20"/>
+
+</odoo>

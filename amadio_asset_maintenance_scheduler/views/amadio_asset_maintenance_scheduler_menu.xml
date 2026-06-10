@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_asset_maintenance_scheduler_root" name="Asset Maintenance Scheduler" sequence="60"/>
+
+    <menuitem id="menu_amadio_asset_maintenance_scheduler_operations" name="Operations"
+              parent="menu_amadio_asset_maintenance_scheduler_root" sequence="10"/>
+
+    <menuitem id="menu_asset_maintenance_schedule" name="Asset Maintenance Schedule"
+              parent="menu_amadio_asset_maintenance_scheduler_operations"
+              action="action_asset_maintenance_schedule" sequence="10"/>
+
+    <menuitem id="menu_asset_maintenance_log" name="Asset Maintenance Log"
+              parent="menu_amadio_asset_maintenance_scheduler_operations"
+              action="action_asset_maintenance_log" sequence="20"/>
+
+</odoo>

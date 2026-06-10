@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_asset_maintenance_schedule_list" model="ir.ui.view">
+        <field name="name">asset.maintenance.schedule.list</field>
+        <field name="model">asset.maintenance.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="asset_id"/>
+                <field name="name"/>
+                <field name="schedule_type"/>
+                <field name="interval_days"/>
+                <field name="interval_count"/>
+                <field name="last_maintenance_date"/>
+                <field name="next_maintenance_date"/>
+                <field name="responsible_id"/>
+                <field name="alert_days_before"/>
+                <field name="alert_partner_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_maintenance_schedule_form" model="ir.ui.view">
+        <field name="name">asset.maintenance.schedule.form</field>
+        <field name="model">asset.maintenance.schedule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="asset_id"/>
+                            <field name="schedule_type"/>
+                            <field name="interval_days"/>
+                            <field name="interval_count"/>
+                            <field name="last_maintenance_date"/>
+                        </group>
+                        <group>
+                            <field name="next_maintenance_date"/>
+                            <field name="responsible_id"/>
+                            <field name="alert_days_before"/>
+                            <field name="alert_partner_ids" widget="many2many_tags"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asset_maintenance_schedule_search" model="ir.ui.view">
+        <field name="name">asset.maintenance.schedule.search</field>
+        <field name="model">asset.maintenance.schedule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_asset_maintenance_schedule" model="ir.actions.act_window">
+        <field name="name">Asset Maintenance Schedule</field>
+        <field name="res_model">asset.maintenance.schedule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_asset_maintenance_log_list" model="ir.ui.view">
+        <field name="name">asset.maintenance.log.list</field>
+        <field name="model">asset.maintenance.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="schedule_id"/>
+                <field name="date"/>
+                <field name="performed_by_id"/>
+                <field name="cost"/>
+                <field name="attachment_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_maintenance_log_form" model="ir.ui.view">
+        <field name="name">asset.maintenance.log.form</field>
+        <field name="model">asset.maintenance.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="schedule_id"/>
+                            <field name="date"/>
+                            <field name="performed_by_id"/>
+                        </group>
+                        <group>
+                            <field name="cost"/>
+                            <field name="notes"/>
+                            <field name="attachment_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asset_maintenance_log_search" model="ir.ui.view">
+        <field name="name">asset.maintenance.log.search</field>
+        <field name="model">asset.maintenance.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="schedule_id"/>
+                <field name="performed_by_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_asset_maintenance_log" model="ir.actions.act_window">
+        <field name="name">Asset Maintenance Log</field>
+        <field name="res_model">asset.maintenance.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

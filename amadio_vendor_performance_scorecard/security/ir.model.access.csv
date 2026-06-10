@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vendor_scorecard_user,vendor.scorecard user,model_vendor_scorecard,base.group_user,1,1,1,1
+access_vendor_scorecard_criterion_user,vendor.scorecard.criterion user,model_vendor_scorecard_criterion,base.group_user,1,1,1,1

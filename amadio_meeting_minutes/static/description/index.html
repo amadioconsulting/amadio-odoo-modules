@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
-<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<title>Structured Meeting Minutes & Action Tracker — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Capture structured minutes directly in Odoo calendar events — record decisions, assign action items, and auto-email minutes to all attendees when published.">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
@@ -13,10 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 .brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
 .brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
 .brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
-.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+.brand-url { color: #7f8c8d; font-size: 14px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #7f8c8d; }
 .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
 .hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
@@ -72,7 +72,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 /* Footer */
 .footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
 .footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-tagline { color: #7f8c8d; font-size: 14px; font-style: italic; margin-bottom: 16px; }
 .footer-info { font-size: 13px; }
 </style>
 </head>
@@ -91,10 +91,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Contract Lifecycle & Renewal Manager</h1>
-      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+      <h1>Structured Meeting Minutes & Action Tracker</h1>
+      <p>Capture structured minutes directly in Odoo calendar events — record decisions, assign action items, and auto-email minutes to all attendees when published.</p>
     </div>
-    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+    <div class="badges"><span class="badge">Calendar Integration</span><span class="badge">Action Item Tracking</span><span class="badge">Auto-Email Minutes</span><span class="badge">Decision Register</span></div>
   </div>
 </div>
 
@@ -102,19 +102,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-white">
   <div class="section-inner">
     <h2>The Challenge</h2>
-    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Why organizations need Structured Meeting Minutes & Action Tracker</p>
     <div class="problems-grid">
         <div class="problem-card">
-            <div class="problem-title">Silent Contract Renewals</div>
-            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+            <div class="problem-title">Minutes in Email Threads</div>
+            <p>Meeting notes are captured in email chains and shared drives — disconnected from the calendar event that generated them and lost within weeks.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">Manual Contract Calendar</div>
-            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+            <div class="problem-title">Untracked Action Items</div>
+            <p>Verbal commitments made in meetings are not tracked anywhere. Follow-up depends on individual memory. Action items are forgotten or revisited repeatedly.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">No Amendment History</div>
-            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+            <div class="problem-title">No Decision Register</div>
+            <p>Decisions made in meetings are buried in notes that nobody reads. When a decision is questioned six months later, nobody can find where it was made or who agreed.</p>
         </div></div>
   </div>
 </div>
@@ -122,49 +122,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <!-- Features -->
 <div class="section section-gray">
   <div class="section-inner">
-    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <h2>What Structured Meeting Minutes & Action Tracker Does</h2>
     <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-icon" style="background:#7f8c8d">📅</div>
             <div class="feature-content">
-                <h4>Renewal Alert Engine</h4>
-                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+                <h4>Native Calendar Integration</h4>
+                <p>meeting.minutes records link directly to calendar.event records. Open any calendar event and access its minutes — agenda, decisions, and action items in one place.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-icon" style="background:#7f8c8d">✅</div>
             <div class="feature-content">
-                <h4>Full Lifecycle States</h4>
-                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+                <h4>Structured Action Items</h4>
+                <p>Each action item records: description, owner, due date, priority (low/medium/high/critical), and completion status — with done date stamped automatically.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-icon" style="background:#7f8c8d">📧</div>
             <div class="feature-content">
-                <h4>Auto-Renew Flag</h4>
-                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+                <h4>Auto-Email on Publish</h4>
+                <p>When minutes are published, all calendar event attendees receive an automatic email with the full minutes — decisions, action items, and next steps.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-icon" style="background:#7f8c8d">📋</div>
             <div class="feature-content">
-                <h4>Amendment Tracking</h4>
-                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+                <h4>Decision Register</h4>
+                <p>Decisions are captured as a structured field — separate from general notes — making it easy to find what was decided in any meeting without reading every line.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-icon" style="background:#7f8c8d">👤</div>
             <div class="feature-content">
-                <h4>Stakeholder Notifications</h4>
-                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+                <h4>Facilitator Tracking</h4>
+                <p>Each meeting records the facilitator and attendees. The facilitator is defaulted to the calendar event organizer but can be changed.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-icon" style="background:#7f8c8d">🔍</div>
             <div class="feature-content">
-                <h4>Linked to Sales Orders</h4>
-                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+                <h4>Action Item Dashboard</h4>
+                <p>All open action items across all meetings are visible in a single filtered view — sortable by owner, due date, and priority.</p>
             </div>
         </div></div>
   </div>
@@ -177,19 +177,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
     <p class="section-sub">Operational in minutes — not weeks</p>
     <div class="steps-grid">
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">1</div>
-            <h4>Register Your Contracts</h4>
-            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+            <div class="step-number" style="background:#7f8c8d">1</div>
+            <h4>Open the Minutes</h4>
+            <p>From any calendar event, click the Minutes button to open or create the meeting minutes record. The event, attendees, and date are pre-populated.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">2</div>
-            <h4>System Monitors Expiry</h4>
-            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+            <div class="step-number" style="background:#7f8c8d">2</div>
+            <h4>Capture During the Meeting</h4>
+            <p>Record the agenda, capture decisions as they're made, and add action items with owners and due dates in real time during the meeting.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">3</div>
-            <h4>Renew or Terminate</h4>
-            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+            <div class="step-number" style="background:#7f8c8d">3</div>
+            <h4>Publish and Distribute</h4>
+            <p>Click Publish when the minutes are finalized. An automatic email is sent to all attendees with the full minutes. Action items are tracked to completion.</p>
         </div></div>
   </div>
 </div>
@@ -198,22 +198,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-gray">
   <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Industries and organizations that rely on Structured Meeting Minutes & Action Tracker</p>
     <div class="usecases-grid">
         <div class="usecase-card">
             <div class="usecase-icon">🏢</div>
-            <h4>Corporate Legal Teams</h4>
-            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
+            <h4>Executive & Board Meetings</h4>
+            <p>Board and executive team meetings with formal minutes requirements benefit from structured decision and action item capture — with automatic distribution to all attendees.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">📋</div>
+            <h4>Project Kick-Off & Status Meetings</h4>
+            <p>Project teams capture meeting outcomes directly linked to project calendar events — keeping project communications in one place within Odoo.</p>
         </div>
         <div class="usecase-card">
             <div class="usecase-icon">🤝</div>
-            <h4>SaaS & Subscription Businesses</h4>
-            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
-        </div>
-        <div class="usecase-card">
-            <div class="usecase-icon">🏗️</div>
-            <h4>Real Estate & Facilities</h4>
-            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+            <h4>Client-Facing Meetings</h4>
+            <p>Account managers document client meetings with structured action items and auto-email minutes — providing clients with professional follow-up documentation automatically.</p>
         </div></div>
   </div>
 </div>

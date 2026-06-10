@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
-<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<title>Sales Commission Tracker — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Configure commission rules by rep, team, product category, or customer — auto-calculate commissions on paid invoices and manage monthly statements through approval to payment.">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
@@ -13,10 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 .brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
 .brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
 .brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
-.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+.brand-url { color: #f1c40f; font-size: 14px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #f1c40f; }
 .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
 .hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
@@ -72,7 +72,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 /* Footer */
 .footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
 .footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-tagline { color: #f1c40f; font-size: 14px; font-style: italic; margin-bottom: 16px; }
 .footer-info { font-size: 13px; }
 </style>
 </head>
@@ -91,10 +91,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Contract Lifecycle & Renewal Manager</h1>
-      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+      <h1>Sales Commission Tracker</h1>
+      <p>Configure commission rules by rep, team, product category, or customer — auto-calculate commissions on paid invoices and manage monthly statements through approval to payment.</p>
     </div>
-    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+    <div class="badges"><span class="badge">Flexible Commission Rules</span><span class="badge">Paid-Invoice Trigger</span><span class="badge">Approval Workflow</span><span class="badge">Payroll Export</span></div>
   </div>
 </div>
 
@@ -102,19 +102,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-white">
   <div class="section-inner">
     <h2>The Challenge</h2>
-    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Why organizations need Sales Commission Tracker</p>
     <div class="problems-grid">
         <div class="problem-card">
-            <div class="problem-title">Silent Contract Renewals</div>
-            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+            <div class="problem-title">Commission Disputes</div>
+            <p>Without a transparent, rules-based system, sales reps don't trust commission calculations. Disputes consume management time and damage motivation.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">Manual Contract Calendar</div>
-            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+            <div class="problem-title">Manual Spreadsheet Calculation</div>
+            <p>Finance calculates commissions in Excel every month — matching invoices to reps, applying rates, handling exceptions manually. It takes days and errors happen.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">No Amendment History</div>
-            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+            <div class="problem-title">No Approved Audit Trail</div>
+            <p>When a rep questions their commission, there's no system record showing exactly which invoices contributed, at what rate, and who approved the statement.</p>
         </div></div>
   </div>
 </div>
@@ -122,49 +122,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <!-- Features -->
 <div class="section section-gray">
   <div class="section-inner">
-    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <h2>What Sales Commission Tracker Does</h2>
     <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-icon" style="background:#f1c40f">📐</div>
             <div class="feature-content">
-                <h4>Renewal Alert Engine</h4>
-                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+                <h4>Flexible Commission Rules</h4>
+                <p>Commission plans support rules by sales rep, team, product category, minimum order amount, and calculation basis (invoiced or paid) — any combination your business requires.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-icon" style="background:#f1c40f">💰</div>
             <div class="feature-content">
-                <h4>Full Lifecycle States</h4>
-                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+                <h4>Paid-Invoice Trigger</h4>
+                <p>Commissions calculate on invoice payment — not invoicing — eliminating commission payments on uncollected revenue. The trigger is automatic and audit-logged.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-icon" style="background:#f1c40f">📋</div>
             <div class="feature-content">
-                <h4>Auto-Renew Flag</h4>
-                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+                <h4>Monthly Statements</h4>
+                <p>The monthly cron generates commission.statement records per active rep — listing every qualifying invoice, amount, rate, and commission line for full transparency.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-icon" style="background:#f1c40f">✅</div>
             <div class="feature-content">
-                <h4>Amendment Tracking</h4>
-                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+                <h4>Approval Workflow</h4>
+                <p>Statements move through Submit → Approve → Mark Paid. Each state change is date-stamped with the acting user — creating a clean approval audit trail.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-icon" style="background:#f1c40f">📧</div>
             <div class="feature-content">
-                <h4>Stakeholder Notifications</h4>
-                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+                <h4>Rep Notifications</h4>
+                <p>Reps receive automatic email notifications when their statement is generated and when it's approved — keeping them informed throughout the process.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-icon" style="background:#f1c40f">📤</div>
             <div class="feature-content">
-                <h4>Linked to Sales Orders</h4>
-                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+                <h4>Payroll Export</h4>
+                <p>Approved statements can be exported for payroll processing — providing the net commission amount per rep in a format ready for your payroll system.</p>
             </div>
         </div></div>
   </div>
@@ -177,19 +177,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
     <p class="section-sub">Operational in minutes — not weeks</p>
     <div class="steps-grid">
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">1</div>
-            <h4>Register Your Contracts</h4>
-            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+            <div class="step-number" style="background:#f1c40f">1</div>
+            <h4>Define Commission Plans</h4>
+            <p>Go to Sales → Commission Plans → New. Create rules specifying rep/category/amount conditions and the applicable rate. Assign plans to sales reps.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">2</div>
-            <h4>System Monitors Expiry</h4>
-            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+            <div class="step-number" style="background:#f1c40f">2</div>
+            <h4>Statements Generate Monthly</h4>
+            <p>At month end, the cron job creates statements for all active reps — calculating commissions on payments received during the period.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">3</div>
-            <h4>Renew or Terminate</h4>
-            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+            <div class="step-number" style="background:#f1c40f">3</div>
+            <h4>Review, Approve, Pay</h4>
+            <p>Reps review their statements. Sales managers approve. Finance marks as paid after payroll processing. Every step is timestamped and logged.</p>
         </div></div>
   </div>
 </div>
@@ -198,22 +198,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-gray">
   <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Industries and organizations that rely on Sales Commission Tracker</p>
     <div class="usecases-grid">
         <div class="usecase-card">
-            <div class="usecase-icon">🏢</div>
-            <h4>Corporate Legal Teams</h4>
-            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
-        </div>
-        <div class="usecase-card">
-            <div class="usecase-icon">🤝</div>
-            <h4>SaaS & Subscription Businesses</h4>
-            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
+            <div class="usecase-icon">💼</div>
+            <h4>Sales-Driven Organizations</h4>
+            <p>Any B2B business with a commissioned sales force — technology, manufacturing, distribution, professional services — benefits from a transparent, automated commission system.</p>
         </div>
         <div class="usecase-card">
             <div class="usecase-icon">🏗️</div>
-            <h4>Real Estate & Facilities</h4>
-            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+            <h4>Multi-Rep Teams</h4>
+            <p>Sales teams with complex commission structures (tiered rates, team commissions, category-specific rates) need a rules engine that handles complexity without spreadsheet gymnastics.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🌍</div>
+            <h4>Multi-Currency Operations</h4>
+            <p>International sales teams with commissions in different currencies need a commission system that handles multi-currency invoicing correctly.</p>
         </div></div>
   </div>
 </div>

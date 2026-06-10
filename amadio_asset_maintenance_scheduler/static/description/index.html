@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contract Lifecycle & Renewal Manager — AMADIO for Odoo 18.0</title>
-<meta name="description" content="Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.">
+<title>Fixed Asset Preventive Maintenance Scheduler — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Link maintenance schedules directly to Odoo fixed assets — configure service intervals, receive pre-due alerts, track costs, and extend asset life systematically.">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
@@ -13,10 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 .brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
 .brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
 .brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
-.brand-url { color: #2980b9; font-size: 14px; font-weight: 600; text-decoration: none; }
+.brand-url { color: #f39c12; font-size: 14px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #2980b9; }
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #f39c12; }
 .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
 .hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
@@ -72,7 +72,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 /* Footer */
 .footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
 .footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-.footer-tagline { color: #2980b9; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-tagline { color: #f39c12; font-size: 14px; font-style: italic; margin-bottom: 16px; }
 .footer-info { font-size: 13px; }
 </style>
 </head>
@@ -91,10 +91,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Contract Lifecycle & Renewal Manager</h1>
-      <p>Track every contract with renewal dates, alert owners before windows close, manage amendments, and ensure no contract expires without a conscious decision.</p>
+      <h1>Fixed Asset Preventive Maintenance Scheduler</h1>
+      <p>Link maintenance schedules directly to Odoo fixed assets — configure service intervals, receive pre-due alerts, track costs, and extend asset life systematically.</p>
     </div>
-    <div class="badges"><span class="badge">Renewal Alert Engine</span><span class="badge">Amendment Tracking</span><span class="badge">Auto-Renew Flags</span><span class="badge">Full Lifecycle States</span></div>
+    <div class="badges"><span class="badge">Asset-Linked Schedules</span><span class="badge">Pre-Due Alerts</span><span class="badge">Maintenance Log</span><span class="badge">Cost Tracking</span></div>
   </div>
 </div>
 
@@ -102,19 +102,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-white">
   <div class="section-inner">
     <h2>The Challenge</h2>
-    <p class="section-sub">Why organizations need Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Why organizations need Fixed Asset Preventive Maintenance Scheduler</p>
     <div class="problems-grid">
         <div class="problem-card">
-            <div class="problem-title">Silent Contract Renewals</div>
-            <p>Auto-renewing contracts roll over for another year unnoticed — committing the business to vendor relationships, pricing, or terms that haven't been reviewed.</p>
+            <div class="problem-title">Reactive Maintenance Culture</div>
+            <p>Equipment is only serviced when it breaks down. Preventive maintenance is intended but never tracked — leading to higher repair costs and shorter asset life.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">Manual Contract Calendar</div>
-            <p>Contracts are tracked in shared spreadsheets or on personal calendars. When the owner leaves, contract renewal dates leave with them.</p>
+            <div class="problem-title">Maintenance Disconnected from Assets</div>
+            <p>Service records are kept in paper logs, spreadsheets, or separate systems — completely disconnected from the fixed asset records in Odoo.</p>
         </div>
         <div class="problem-card">
-            <div class="problem-title">No Amendment History</div>
-            <p>Contract modifications are handled via email and replacement PDFs. There's no structured record of what changed, when, and who approved the amendment.</p>
+            <div class="problem-title">No Upcoming Maintenance Visibility</div>
+            <p>Finance and operations teams have no visibility into what maintenance is coming up, what it will cost, and how it aligns with asset depreciation schedules.</p>
         </div></div>
   </div>
 </div>
@@ -122,49 +122,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <!-- Features -->
 <div class="section section-gray">
   <div class="section-inner">
-    <h2>What Contract Lifecycle & Renewal Manager Does</h2>
+    <h2>What Fixed Asset Preventive Maintenance Scheduler Does</h2>
     <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔔</div>
+            <div class="feature-icon" style="background:#f39c12">🔧</div>
             <div class="feature-content">
-                <h4>Renewal Alert Engine</h4>
-                <p>Configure renewal notice periods (e.g., 90 days before expiry). The system automatically transitions contracts to 'Pending Renewal' state and emails all stakeholders.</p>
+                <h4>Asset-Linked Schedules</h4>
+                <p>Create asset.maintenance.schedule records directly linked to account.asset records — connecting maintenance planning with financial asset management.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📋</div>
+            <div class="feature-icon" style="background:#f39c12">📅</div>
             <div class="feature-content">
-                <h4>Full Lifecycle States</h4>
-                <p>Contracts move through states: Draft → Active → Pending Renewal → Renewed or Expired or Terminated. Each state transition is date-stamped and logged.</p>
+                <h4>Time-Based Service Intervals</h4>
+                <p>Configure maintenance intervals in days (e.g., every 90 days, every 365 days). Next maintenance date computes automatically from the last service date.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔄</div>
+            <div class="feature-icon" style="background:#f39c12">🔔</div>
             <div class="feature-content">
-                <h4>Auto-Renew Flag</h4>
-                <p>Mark contracts as auto-renewing. The system tracks these separately and sends earlier alerts — ensuring renewal decisions are made intentionally, not by default.</p>
+                <h4>Pre-Due Email Alerts</h4>
+                <p>Set an alert lead time (e.g., 14 days before due). The daily cron sends email alerts to the responsible person and configured stakeholders before maintenance is due.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">📝</div>
+            <div class="feature-icon" style="background:#f39c12">📋</div>
             <div class="feature-content">
-                <h4>Amendment Tracking</h4>
-                <p>Contract amendments are logged as structured records — date, description, and attachment. The full amendment history is always visible on the contract record.</p>
+                <h4>Maintenance Log</h4>
+                <p>Each maintenance event is logged as asset.maintenance.log — recording date, who performed the service, cost, notes, and any attachment (service report, invoice).</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">👥</div>
+            <div class="feature-icon" style="background:#f39c12">💰</div>
             <div class="feature-content">
-                <h4>Stakeholder Notifications</h4>
-                <p>Each contract has an owner and optional legal contact. Both receive renewal alerts, plus any additional stakeholders configured on the alert list.</p>
+                <h4>Cost Tracking</h4>
+                <p>Cumulative maintenance costs are tracked against each asset — providing data for total cost of ownership analysis and asset replacement decisions.</p>
             </div>
         </div>
         <div class="feature-card">
-            <div class="feature-icon" style="background:#2980b9">🔗</div>
+            <div class="feature-icon" style="background:#f39c12">📊</div>
             <div class="feature-content">
-                <h4>Linked to Sales Orders</h4>
-                <p>Customer contracts can be linked to related sale.order records — providing context about the commercial relationship behind each contract.</p>
+                <h4>Next Maintenance Dashboard</h4>
+                <p>The fixed asset form shows next maintenance date and upcoming schedule summary — giving finance and operations a shared view of asset service status.</p>
             </div>
         </div></div>
   </div>
@@ -177,19 +177,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
     <p class="section-sub">Operational in minutes — not weeks</p>
     <div class="steps-grid">
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">1</div>
-            <h4>Register Your Contracts</h4>
-            <p>Create a contract.contract record for each agreement — customer, vendor, employment, or NDA. Set start date, end date, renewal notice period, and stakeholders.</p>
+            <div class="step-number" style="background:#f39c12">1</div>
+            <h4>Create a Schedule</h4>
+            <p>On any fixed asset record, go to the Maintenance tab and create a schedule — set the interval, responsible person, alert lead time, and first service date.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">2</div>
-            <h4>System Monitors Expiry</h4>
-            <p>The daily cron evaluates all active contracts. When a contract enters its notice window, state changes to Pending Renewal and email alerts fire automatically.</p>
+            <div class="step-number" style="background:#f39c12">2</div>
+            <h4>Log Each Service</h4>
+            <p>When maintenance is performed, add a maintenance log entry with date, cost, and notes. The next maintenance date updates automatically.</p>
         </div>
         <div class="step-card">
-            <div class="step-number" style="background:#2980b9">3</div>
-            <h4>Renew or Terminate</h4>
-            <p>Stakeholders review the contract during the notice window. Click Renew to create a new contract linked to the original, or Terminate to close it formally.</p>
+            <div class="step-number" style="background:#f39c12">3</div>
+            <h4>Receive Alerts</h4>
+            <p>The daily cron sends email alerts when maintenance is upcoming. Responsible staff are notified in advance — eliminating missed service events.</p>
         </div></div>
   </div>
 </div>
@@ -198,22 +198,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyge
 <div class="section section-gray">
   <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-sub">Industries and organizations that rely on Contract Lifecycle & Renewal Manager</p>
+    <p class="section-sub">Industries and organizations that rely on Fixed Asset Preventive Maintenance Scheduler</p>
     <div class="usecases-grid">
         <div class="usecase-card">
+            <div class="usecase-icon">🏭</div>
+            <h4>Manufacturing Equipment</h4>
+            <p>Factory operators maintain production equipment on scheduled intervals — with maintenance costs tracked against each machine for accurate cost-per-unit analysis.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🚚</div>
+            <h4>Fleet Management</h4>
+            <p>Companies with vehicle fleets link oil changes, tire rotations, and annual inspections to fleet asset records — with automatic reminders before each service is due.</p>
+        </div>
+        <div class="usecase-card">
             <div class="usecase-icon">🏢</div>
-            <h4>Corporate Legal Teams</h4>
-            <p>In-house legal departments managing vendor, customer, and employment contracts need a centralized system with proactive alerts — not reactive scrambling.</p>
-        </div>
-        <div class="usecase-card">
-            <div class="usecase-icon">🤝</div>
-            <h4>SaaS & Subscription Businesses</h4>
-            <p>Companies with annual subscription contracts need to track renewal windows, manage auto-renew exceptions, and ensure sales teams engage customers before contracts lapse.</p>
-        </div>
-        <div class="usecase-card">
-            <div class="usecase-icon">🏗️</div>
-            <h4>Real Estate & Facilities</h4>
-            <p>Organizations managing leases, service agreements, and maintenance contracts need renewal visibility — especially for contracts with significant cost or operational implications.</p>
+            <h4>Facilities Management</h4>
+            <p>Building systems (HVAC, elevators, generators, fire suppression) require scheduled preventive maintenance. Linking schedules to asset records ensures nothing is missed.</p>
         </div></div>
   </div>
 </div>

@@ -3,6 +3,7 @@
 
     <menuitem id="menu_contract_root"
               name="Contracts"
+              web_icon="amadio_contract_lifecycle_mgr,static/description/icon.png"
               sequence="60"/>
 
     <menuitem id="menu_contract_operations"

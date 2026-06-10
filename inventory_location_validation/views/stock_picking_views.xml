@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Extend Stock Picking Form to add location validation banner -->
+        <record id="stock_picking_form_location_validation" model="ir.ui.view">
+            <field name="name">stock.picking.form.location.validation</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id">stock.view_picking_form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_validate']" position="before">
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': [('has_location_violations', '=', False)]}">
+                        <strong>Location Validation Warning:</strong>
+                        This picking has <field name="location_violation_count" readonly="True" /> location rule violation(s).
+                        Review the move destinations before validating. Click "Validate" to see details and confirm.
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

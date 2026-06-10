@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit stock.picking form view to add buttons and fields -->
+        <record id="view_picking_form_optimize" model="ir.ui.view">
+            <field name="name">stock.picking.form.optimize</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id">stock.view_picking_form</field>
+            <field name="arch" type="xml">
+                <!-- Add hidden field for is_optimizable compute -->
+                <xpath expr="//sheet" position="before">
+                    <field name="is_optimizable" invisible="1" />
+                </xpath>
+
+                <!-- Add Optimize Pick Path button next to action buttons -->
+                <xpath expr="//header" position="inside">
+                    <button
+                        name="action_optimize_pick_path"
+                        type="object"
+                        string="Optimize Pick Path"
+                        class="btn-info"
+                        attrs="{'invisible': [('is_optimizable', '=', False), ('state', '!=', 'assigned')]}"
+                    />
+                    <button
+                        name="action_report_optimized_pick_list"
+                        type="object"
+                        string="Print Optimized Pick List"
+                        class="btn-info"
+                        attrs="{'invisible': [('is_optimizable', '=', False)]}"
+                    />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

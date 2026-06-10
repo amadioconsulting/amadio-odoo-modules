@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View for calendar.sync.rule -->
+        <record id="calendar_sync_rule_view_tree" model="ir.ui.view">
+            <field name="name">calendar.sync.rule.tree</field>
+            <field name="model">calendar.sync.rule</field>
+            <field name="arch" type="xml">
+                <tree string="Calendar Sync Rules">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="model_id"/>
+                    <field name="trigger_field"/>
+                    <field name="trigger_value"/>
+                    <field name="assign_to"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View for calendar.sync.rule -->
+        <record id="calendar_sync_rule_view_form" model="ir.ui.view">
+            <field name="name">calendar.sync.rule.form</field>
+            <field name="model">calendar.sync.rule</field>
+            <field name="arch" type="xml">
+                <form string="Calendar Sync Rule">
+                    <header>
+                        <button name="action_test_rule" type="object" string="Test Rule" class="btn-primary" help="Test this rule on existing records"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                            <p><strong>How it works:</strong> When the selected field on the source model matches the trigger value, a calendar event will be created automatically.</p>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <!-- Trigger Configuration Tab -->
+                            <page string="Trigger Configuration" name="trigger_config">
+                                <group>
+                                    <group string="Source Model">
+                                        <field name="model_id" required="1"/>
+                                        <field name="model_name" force_save="1"/>
+                                    </group>
+                                    <group string="Trigger Condition">
+                                        <field name="trigger_field" required="1" help="e.g., 'state' or 'stage_id'"/>
+                                        <field name="trigger_value" required="1" help="e.g., 'sale' or '3' for ID fields"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Event Configuration Tab -->
+                            <page string="Event Configuration" name="event_config">
+                                <group>
+                                    <group string="Event Details">
+                                        <field name="event_name_template" required="1" help="Use {record_name} and {record_url} placeholders"/>
+                                        <field name="event_delay_days" help="Days to delay event creation after trigger"/>
+                                        <field name="event_duration" help="Event duration in hours"/>
+                                        <field name="event_categ_id" help="Optional event type/category"/>
+                                    </group>
+                                    <group string="Event Description">
+                                        <field name="description_template" nolabel="1" help="Use {record_name} and {record_url} placeholders"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Assignment Configuration Tab -->
+                            <page string="Assignment" name="assignment_config">
+                                <group>
+                                    <group string="Assign Event To">
+                                        <field name="assign_to" required="1"/>
+                                        <field name="responsible_field" attrs="{'required': [('assign_to', '=', 'responsible_user')], 'invisible': [('assign_to', '!=', 'responsible_user')]}"/>
+                                    </group>
+                                </group>
+                                <div class="alert alert-warning" role="alert">
+                                    <p><strong>Assignment modes:</strong></p>
+                                    <ul>
+                                        <li><strong>Current User:</strong> Event assigned to the user who made the change</li>
+                                        <li><strong>Responsible User:</strong> Event assigned to a user field on the source record (e.g., project manager, sales rep)</li>
+                                        <li><strong>All Followers:</strong> Event assigned to all mail.followers of the source record</li>
+                                    </ul>
+                                </div>
+                            </page>
+
+                            <!-- Advanced Tab -->
+                            <page string="Advanced" name="advanced">
+                                <group>
+                                    <group string="System">
+                                        <field name="server_action_id" readonly="1" help="Linked base.automation server action (auto-created)"/>
+                                    </group>
+                                </group>
+                                <div class="alert alert-info" role="alert">
+                                    <p><strong>Templates Reference:</strong></p>
+                                    <ul>
+                                        <li><code>{record_name}</code> — Name/ID of the source record</li>
+                                        <li><code>{record_url}</code> — Odoo menu link to the source record</li>
+                                    </ul>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View for calendar.sync.rule -->
+        <record id="calendar_sync_rule_view_search" model="ir.ui.view">
+            <field name="name">calendar.sync.rule.search</field>
+            <field name="model">calendar.sync.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search Sync Rules">
+                    <field name="name" string="Rule Name"/>
+                    <field name="model_id"/>
+                    <field name="trigger_field"/>
+                    <separator/>
+                    <filter name="active_rules" string="Active" domain="[('active', '=', True)]"/>
+                    <filter name="inactive_rules" string="Inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action to open calendar.sync.rule -->
+        <record id="calendar_sync_rule_action" model="ir.actions.act_window">
+            <field name="name">Calendar Sync Rules</field>
+            <field name="res_model">calendar.sync.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new sync rule.
+                </p>
+                <p>
+                    Define rules to automatically create calendar events when records
+                    change status or stage. Each rule monitors a specific field and
+                    triggers event creation when the field matches a configured value.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

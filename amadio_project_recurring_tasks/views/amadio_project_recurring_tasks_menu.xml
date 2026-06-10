@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_project_recurring_tasks_root" name="Project Recurring Tasks" sequence="60"/>
+
+    <menuitem id="menu_amadio_project_recurring_tasks_operations" name="Operations"
+              parent="menu_amadio_project_recurring_tasks_root" sequence="10"/>
+
+    <menuitem id="menu_project_task_recurrence_template" name="Project Task Recurrence Template"
+              parent="menu_amadio_project_recurring_tasks_operations"
+              action="action_project_task_recurrence_template" sequence="10"/>
+
+</odoo>

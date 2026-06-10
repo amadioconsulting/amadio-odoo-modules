@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit analytic account form view -->
+        <record id="view_analytic_account_form_budget" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.budget</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id">analytic.view_account_analytic_form</field>
+            <field name="arch" type="xml">
+
+                <!-- Add Budget Alert tab before the Notes section -->
+                <notebook position="inside">
+                    <page string="Budget Alert" name="budget_alert">
+                        <group>
+                            <group>
+                                <field name="budget_enabled" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+
+                        <div class="alert alert-info" role="alert">
+                            <strong>Budget Control:</strong> Enable budget thresholds to monitor and control spending on this analytic account. Set warn and block percentages to receive alerts and prevent overspending.
+                        </div>
+
+                        <group attrs="{'invisible': [('budget_enabled', '=', False)]}">
+                            <group string="Budget Setup">
+                                <field name="budget_amount" widget="monetary"/>
+                                <field name="budget_period" required="1"/>
+                                <field name="budget_date_from" attrs="{'required': [('budget_period', '=', 'custom')], 'invisible': [('budget_period', '!=', 'custom')]}"/>
+                                <field name="budget_date_to" attrs="{'required': [('budget_period', '=', 'custom')], 'invisible': [('budget_period', '!=', 'custom')]}"/>
+                            </group>
+
+                            <group string="Threshold Configuration">
+                                <field name="budget_warn_pct" widget="float" required="1"/>
+                                <field name="budget_block_pct" widget="float" required="1"/>
+                            </group>
+
+                            <group string="Alert Recipients">
+                                <field name="budget_alert_partner_ids" widget="many2many_tags" nolabel="1" colspan="2"/>
+                            </group>
+                        </group>
+
+                        <!-- Budget Status -->
+                        <group attrs="{'invisible': [('budget_enabled', '=', False)]}">
+                            <group string="Budget Status" colspan="2">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="budget_amount" string="Budget Amount"/>
+                                        <field name="budget_amount" readonly="1" nolabel="1" class="o_field_monetary"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="company_currency_id" string="Currency"/>
+                                        <field name="company_currency_id" readonly="1" nolabel="1"/>
+                                    </div>
+                                </div>
+
+                                <separator string="Spending"/>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <strong>Amount Spent:</strong>
+                                        <field name="budget_spent" readonly="1" widget="monetary" nolabel="1"/>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <strong>Remaining:</strong>
+                                        <field name="budget_remaining" readonly="1" widget="monetary" nolabel="1"/>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <strong>Percent Spent:</strong>
+                                        <field name="budget_pct_spent" readonly="1" widget="float" nolabel="1"/>
+                                    </div>
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <div class="progress" style="height: 30px;">
+                                            <div class="progress-bar"
+                                                 role="progressbar"
+                                                 style="width: 0%; background-color: #0d2b1e;"
+                                                 attrs="{'style': 'width: ' + str(int(budget_pct_spent)) + '%; background-color: #22c55e;'}">
+                                                <span style="color: white; font-weight: bold; line-height: 30px;">
+                                                    <t t-esc="int(budget_pct_spent)"/>%
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <small class="text-muted">
+                                            Warn at <t t-esc="budget_warn_pct"/>% | Block at <t t-esc="budget_block_pct"/>%
+                                        </small>
+                                    </div>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group attrs="{'invisible': [('budget_enabled', '=', False)]}">
+                            <field name="budget_last_alert_date" readonly="1" string="Last Alert Sent" widget="date"/>
+                        </group>
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+        <!-- Inherit analytic account list view to show budget info -->
+        <record id="view_analytic_account_list_budget" model="ir.ui.view">
+            <field name="name">account.analytic.account.list.budget</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id">analytic.view_account_analytic_list</field>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="editable">bottom</attribute>
+                </tree>
+                <field name="code" position="after">
+                    <field name="budget_enabled" optional="show"/>
+                    <field name="budget_pct_spent" optional="show" widget="float" string="Budget %"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

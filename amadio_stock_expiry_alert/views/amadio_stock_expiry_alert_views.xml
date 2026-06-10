@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_expiry_rule_list" model="ir.ui.view">
+        <field name="name">stock.expiry.rule.list</field>
+        <field name="model">stock.expiry.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="product_category_id"/>
+                <field name="product_id"/>
+                <field name="warn_days_before"/>
+                <field name="block_days_before"/>
+                <field name="alert_partner_ids" widget="many2many_tags"/>
+                <field name="auto_quarantine"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_stock_expiry_rule_form" model="ir.ui.view">
+        <field name="name">stock.expiry.rule.form</field>
+        <field name="model">stock.expiry.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_category_id"/>
+                            <field name="product_id"/>
+                            <field name="warn_days_before"/>
+                            <field name="block_days_before"/>
+                        </group>
+                        <group>
+                            <field name="alert_partner_ids" widget="many2many_tags"/>
+                            <field name="auto_quarantine"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_expiry_rule_search" model="ir.ui.view">
+        <field name="name">stock.expiry.rule.search</field>
+        <field name="model">stock.expiry.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="product_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_expiry_rule" model="ir.actions.act_window">
+        <field name="name">Stock Expiry Rule</field>
+        <field name="res_model">stock.expiry.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

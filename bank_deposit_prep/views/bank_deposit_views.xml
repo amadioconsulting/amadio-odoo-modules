@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── LIST VIEW ─────────────────────────────────────────────── -->
+    <record id="view_bank_deposit_list" model="ir.ui.view">
+        <field name="name">bank.deposit.list</field>
+        <field name="model">bank.deposit</field>
+        <field name="arch" type="xml">
+            <list string="Bank Deposits" decoration-success="state=='confirmed'"
+                  decoration-info="state=='prepared' or state=='deposited'"
+                  decoration-muted="state=='draft'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="line_count" string="Items"/>
+                <field name="total_cheques" optional="show"/>
+                <field name="total_cash" optional="show"/>
+                <field name="total_eft" optional="hide"/>
+                <field name="total_amount" string="Total"/>
+                <field name="prepared_by_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state=='confirmed'"
+                       decoration-info="state in ('prepared','deposited')"
+                       decoration-secondary="state=='draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── FORM VIEW ─────────────────────────────────────────────── -->
+    <record id="view_bank_deposit_form" model="ir.ui.view">
+        <field name="name">bank.deposit.form</field>
+        <field name="model">bank.deposit</field>
+        <field name="arch" type="xml">
+            <form string="Bank Deposit">
+                <header>
+                    <button name="action_prepare" string="Mark Prepared"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_deposit" string="Mark Deposited"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'prepared'"/>
+                    <button name="action_confirm" string="Confirm"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'deposited'"/>
+                    <button name="action_print_slip" string="Print Deposit Slip"
+                            type="object" icon="fa-print"
+                            invisible="state == 'draft'"/>
+                    <button name="action_reset_draft" string="Reset to Draft"
+                            type="object"
+                            invisible="state in ('draft', 'confirmed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,prepared,deposited,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Deposit Details">
+                            <field name="date"/>
+                            <field name="journal_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="prepared_by_id"/>
+                        </group>
+                        <group string="Totals">
+                            <field name="total_cheques"/>
+                            <field name="total_cash"/>
+                            <field name="total_eft"/>
+                            <field name="total_other"
+                                   invisible="total_other == 0"/>
+                            <field name="total_amount" class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+
+                    <!-- Lines -->
+                    <notebook>
+                        <page string="Deposit Lines" name="lines">
+                            <div class="mb-2" invisible="state != 'draft'">
+                                <button name="action_add_payments"
+                                        string="Add Outstanding Payments"
+                                        type="object"
+                                        class="btn btn-secondary"/>
+                            </div>
+                            <field name="line_ids"
+                                   readonly="state in ('confirmed',)"
+                                   widget="one2many">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="payment_type" optional="show"/>
+                                    <field name="payer_name"/>
+                                    <field name="cheque_number"
+                                           column_invisible="parent.total_cheques == 0"
+                                           optional="show"/>
+                                    <field name="payment_id" optional="show"/>
+                                    <field name="amount"/>
+                                    <field name="notes" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Bank Information" name="bank_info">
+                            <group>
+                                <field name="bank_reference"
+                                       readonly="state not in ('deposited','confirmed')"/>
+                                <field name="confirmed_by_id" readonly="1"/>
+                                <field name="confirmation_date" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="notes" placeholder="Internal notes…"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── SEARCH VIEW ───────────────────────────────────────────── -->
+    <record id="view_bank_deposit_search" model="ir.ui.view">
+        <field name="name">bank.deposit.search</field>
+        <field name="model">bank.deposit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="prepared_by_id"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Prepared" name="prepared" domain="[('state','=','prepared')]"/>
+                <filter string="Deposited" name="deposited" domain="[('state','=','deposited')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state','=','confirmed')]"/>
+                <separator/>
+                <filter string="This Month" name="this_month"
+                        domain="[('date','&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Journal" name="groupby_journal" context="{'group_by': 'journal_id'}"/>
+                    <filter string="Month" name="groupby_month" context="{'group_by': 'date:month'}"/>
+                    <filter string="Prepared By" name="groupby_preparer" context="{'group_by': 'prepared_by_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── ADD PAYMENT WIZARD ────────────────────────────────────── -->
+    <record id="view_bank_deposit_add_payment_wizard" model="ir.ui.view">
+        <field name="name">bank.deposit.add.payment.wizard.form</field>
+        <field name="model">bank.deposit.add.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Payments to Deposit">
+                <group string="Filters">
+                    <field name="deposit_id" invisible="1"/>
+                    <field name="journal_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <field name="payment_ids">
+                    <list>
+                        <field name="date"/>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="journal_id"/>
+                        <field name="amount"/>
+                        <field name="currency_id" groups="base.group_multi_currency"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_add_to_deposit" string="Add Selected Payments"
+                            type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── ACTIONS ───────────────────────────────────────────────── -->
+    <record id="action_bank_deposit" model="ir.actions.act_window">
+        <field name="name">Bank Deposits</field>
+        <field name="res_model">bank.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_bank_deposit_search"/>
+        <field name="context">{'search_default_this_month': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first bank deposit
+            </p>
+            <p>
+                Group payments into deposit batches and print a bank-ready deposit slip.
+            </p>
+        </field>
+    </record>
+
+    <!-- ── MENU ITEMS ────────────────────────────────────────────── -->
+    <menuitem id="menu_bank_deposit_root"
+              name="Bank Deposits"
+              parent="account.menu_finance"
+              sequence="99"
+              action="action_bank_deposit"
+              icon="fa-university"/>
+
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sop_template_user,SOP Template - User,model_sop_template,base.group_user,1,0,0,0
+access_sop_template_manager,SOP Template - Manager,model_sop_template,base.group_system,1,1,1,1
+access_sop_template_step_user,SOP Template Step - User,model_sop_template_step,base.group_user,1,0,0,0
+access_sop_template_step_manager,SOP Template Step - Manager,model_sop_template_step,base.group_system,1,1,1,1
+access_sop_checklist_user,SOP Checklist - User,model_sop_checklist,base.group_user,1,1,1,0
+access_sop_checklist_manager,SOP Checklist - Manager,model_sop_checklist,base.group_system,1,1,1,1
+access_sop_checklist_step_user,SOP Checklist Step - User,model_sop_checklist_step,base.group_user,1,1,1,0
+access_sop_checklist_step_manager,SOP Checklist Step - Manager,model_sop_checklist_step,base.group_system,1,1,1,1
+access_sop_launch_wizard_user,SOP Launch Wizard - User,model_sop_launch_checklist_wizard,base.group_user,1,1,1,1
+access_sop_launch_wizard_manager,SOP Launch Wizard - Manager,model_sop_launch_checklist_wizard,base.group_system,1,1,1,1

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- SOP TEMPLATE LIST VIEW -->
+    <record id="sop_template_view_list" model="ir.ui.view">
+        <field name="name">sop.template.list</field>
+        <field name="model">sop.template</field>
+        <field name="arch" type="xml">
+            <tree string="SOP Templates">
+                <field name="sequence" widget="handle" />
+                <field name="code" />
+                <field name="name" />
+                <field name="category" />
+                <field name="step_count" />
+                <field name="critical_step_count" />
+                <field name="checklist_count" />
+                <field name="active" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- SOP TEMPLATE FORM VIEW -->
+    <record id="sop_template_view_form" model="ir.ui.view">
+        <field name="name">sop.template.form</field>
+        <field name="model">sop.template</field>
+        <field name="arch" type="xml">
+            <form string="SOP Template">
+                <header>
+                    <button name="action_launch" type="object" string="Launch on Record" class="oe_highlight" />
+                    <button name="action_view_checklists" type="object" string="View Checklists" />
+                    <button name="action_duplicate_template" type="object" string="Duplicate" />
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_checklists" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="checklist_count" widget="statinfo" string="Checklists" />
+                        </button>
+                        <button name="action_view_checklists" type="object" class="oe_stat_button" icon="fa-flag">
+                            <field name="critical_step_count" widget="statinfo" string="Critical Steps" />
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Template Name" />
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="code" placeholder="e.g., ONBOARD-01" />
+                            <field name="category" placeholder="e.g., Onboarding" />
+                            <field name="active" widget="boolean_toggle" />
+                        </group>
+                        <group>
+                            <field name="step_count" readonly="1" />
+                            <field name="critical_step_count" readonly="1" />
+                            <field name="applicable_models" placeholder="e.g., sale.order, project.project" />
+                        </group>
+                    </group>
+
+                    <field name="description" placeholder="Describe the purpose and scope of this SOP..." />
+
+                    <notebook>
+                        <page string="Steps" name="steps">
+                            <field name="step_ids" mode="tree">
+                                <tree editable="bottom" string="SOP Steps">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" required="1" />
+                                    <field name="is_critical" widget="boolean" />
+                                    <field name="requires_evidence" widget="boolean" />
+                                    <field name="estimated_minutes" />
+                                    <field name="responsible_role" />
+                                </tree>
+                            </field>
+
+                            <div class="o_form_view_footer mt-2">
+                                <p class="text-muted">
+                                    <strong>Tip:</strong> Mark steps as "Critical" to block workflow completion until they're done.
+                                    Use "Requires Evidence" to mandate attachments for compliance.
+                                </p>
+                            </div>
+                        </page>
+
+                        <page string="Details" name="details">
+                            <group>
+                                <field name="id" readonly="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}" />
+                    <field name="activity_ids" widget="mail_activity" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- SOP TEMPLATE SEARCH VIEW -->
+    <record id="sop_template_view_search" model="ir.ui.view">
+        <field name="name">sop.template.search</field>
+        <field name="model">sop.template</field>
+        <field name="arch" type="xml">
+            <search string="SOP Templates">
+                <field name="name" />
+                <field name="code" />
+                <field name="category" />
+                <separator />
+                <filter name="active" string="Active" domain="[('active', '=', True)]" />
+                <filter name="inactive" string="Inactive" domain="[('active', '=', False)]" />
+                <separator />
+                <filter name="has_critical" string="Has Critical Steps" domain="[('critical_step_count', '>', 0)]" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter name="group_category" string="Category" context="{'group_by': 'category'}" />
+                    <filter name="group_active" string="Active" context="{'group_by': 'active'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION: SOP TEMPLATE -->
+    <record id="action_sop_template" model="ir.actions.act_window">
+        <field name="name">SOP Templates</field>
+        <field name="res_model">sop.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="sop_template_view_search" />
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <!-- MENU: SOP CHECKLIST BUILDER -->
+    <menuitem
+        id="menu_sop_root"
+        name="SOP Checklist"
+        icon="fa-list-check"
+        sequence="10"
+    />
+
+    <!-- SUBMENU: SOP TEMPLATES -->
+    <menuitem
+        id="menu_sop_template"
+        name="Templates"
+        action="action_sop_template"
+        parent="menu_sop_root"
+        sequence="10"
+    />
+
+</odoo>

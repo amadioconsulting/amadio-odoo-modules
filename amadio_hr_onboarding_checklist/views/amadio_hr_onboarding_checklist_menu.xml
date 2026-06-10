@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_hr_onboarding_checklist_root" name="Hr Onboarding Checklist" sequence="60"/>
+
+    <menuitem id="menu_amadio_hr_onboarding_checklist_operations" name="Operations"
+              parent="menu_amadio_hr_onboarding_checklist_root" sequence="10"/>
+
+    <menuitem id="menu_hr_onboarding_template" name="Hr Onboarding Template"
+              parent="menu_amadio_hr_onboarding_checklist_operations"
+              action="action_hr_onboarding_template" sequence="10"/>
+
+    <menuitem id="menu_hr_onboarding_template_step" name="Hr Onboarding Template Step"
+              parent="menu_amadio_hr_onboarding_checklist_operations"
+              action="action_hr_onboarding_template_step" sequence="20"/>
+
+    <menuitem id="menu_hr_onboarding_checklist" name="Hr Onboarding Checklist"
+              parent="menu_amadio_hr_onboarding_checklist_operations"
+              action="action_hr_onboarding_checklist" sequence="30"/>
+
+    <menuitem id="menu_hr_onboarding_step" name="Hr Onboarding Step"
+              parent="menu_amadio_hr_onboarding_checklist_operations"
+              action="action_hr_onboarding_step" sequence="40"/>
+
+</odoo>

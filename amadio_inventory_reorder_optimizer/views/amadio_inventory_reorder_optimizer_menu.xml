@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_inventory_reorder_optimizer_root" name="Inventory Reorder Optimizer" sequence="60"/>
+
+    <menuitem id="menu_amadio_inventory_reorder_optimizer_operations" name="Operations"
+              parent="menu_amadio_inventory_reorder_optimizer_root" sequence="10"/>
+
+    <menuitem id="menu_inventory_forecast" name="Inventory Forecast"
+              parent="menu_amadio_inventory_reorder_optimizer_operations"
+              action="action_inventory_forecast" sequence="10"/>
+
+</odoo>

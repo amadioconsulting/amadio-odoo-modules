@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_deposit_slip" model="ir.actions.report">
+        <field name="name">Bank Deposit Slip</field>
+        <field name="model">bank.deposit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bank_deposit_prep.report_deposit_slip</field>
+        <field name="report_file">bank_deposit_prep.report_deposit_slip</field>
+        <field name="print_report_name">'Deposit Slip - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_bank_deposit"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_deposit_slip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- Header -->
+                        <div style="border-bottom: 3px solid #0f3460; margin-bottom: 16px; padding-bottom: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h2 style="color: #0f3460; margin: 0; font-size: 22px; font-weight: 700;">
+                                        BANK DEPOSIT SLIP
+                                    </h2>
+                                    <p style="margin: 4px 0 0 0; color: #555; font-size: 13px;">
+                                        <t t-esc="o.company_id.name"/>
+                                    </p>
+                                </div>
+                                <div style="text-align: right; font-size: 12px; color: #333;">
+                                    <div style="font-size: 16px; font-weight: 700; color: #0f3460;">
+                                        <t t-esc="o.name"/>
+                                    </div>
+                                    <div>Date: <strong><t t-esc="o.date" t-options="{'widget': 'date'}"/></strong></div>
+                                    <div>Status: <strong><t t-esc="dict(o.fields_get(['state'])['state']['selection'])[o.state]"/></strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Info -->
+                        <div style="background: #f8f9fa; border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-size: 12px;">
+                            <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                                <div t-if="o.company_id.deposit_bank_name">
+                                    <strong>Bank:</strong> <t t-esc="o.company_id.deposit_bank_name"/>
+                                </div>
+                                <div t-if="o.company_id.deposit_bank_institution">
+                                    <strong>Institution:</strong> <t t-esc="o.company_id.deposit_bank_institution"/>
+                                </div>
+                                <div t-if="o.company_id.deposit_bank_transit">
+                                    <strong>Transit:</strong> <t t-esc="o.company_id.deposit_bank_transit"/>
+                                </div>
+                                <div t-if="o.company_id.deposit_bank_account">
+                                    <strong>Account:</strong> <t t-esc="o.company_id.deposit_bank_account"/>
+                                </div>
+                                <div>
+                                    <strong>Journal:</strong> <t t-esc="o.journal_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary Totals -->
+                        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                            <t t-if="o.total_cheques">
+                                <div style="flex: 1; background: #e8f4fd; border-radius: 6px; padding: 10px; text-align: center;">
+                                    <div style="font-size: 11px; color: #555; text-transform: uppercase; font-weight: 600;">Cheques</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #0f3460;">
+                                        <t t-esc="o.total_cheques" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="o.total_cash">
+                                <div style="flex: 1; background: #e8fdf0; border-radius: 6px; padding: 10px; text-align: center;">
+                                    <div style="font-size: 11px; color: #555; text-transform: uppercase; font-weight: 600;">Cash</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #1a7a4a;">
+                                        <t t-esc="o.total_cash" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="o.total_eft">
+                                <div style="flex: 1; background: #fdf5e8; border-radius: 6px; padding: 10px; text-align: center;">
+                                    <div style="font-size: 11px; color: #555; text-transform: uppercase; font-weight: 600;">EFT / Wire</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #8a5c00;">
+                                        <t t-esc="o.total_eft" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </div>
+                                </div>
+                            </t>
+                            <div style="flex: 1; background: #0f3460; border-radius: 6px; padding: 10px; text-align: center;">
+                                <div style="font-size: 11px; color: #a8c8f0; text-transform: uppercase; font-weight: 600;">Total Deposit</div>
+                                <div style="font-size: 18px; font-weight: 700; color: #ffffff;">
+                                    <t t-esc="o.total_amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Line Items Table -->
+                        <table class="table table-sm" style="font-size: 11px; width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #0f3460; color: white;">
+                                    <th style="padding: 6px 8px; text-align: left;">#</th>
+                                    <th style="padding: 6px 8px; text-align: left;">Payer / Description</th>
+                                    <th style="padding: 6px 8px; text-align: left;">Type</th>
+                                    <th style="padding: 6px 8px; text-align: left;">Cheque #</th>
+                                    <th style="padding: 6px 8px; text-align: right;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                                        <td style="padding: 5px 8px; color: #888;"><t t-esc="line_index + 1"/></td>
+                                        <td style="padding: 5px 8px;"><t t-esc="line.payer_name"/></td>
+                                        <td style="padding: 5px 8px;">
+                                            <t t-esc="dict(line.fields_get(['payment_type'])['payment_type']['selection'])[line.payment_type]"/>
+                                        </td>
+                                        <td style="padding: 5px 8px; font-family: monospace;"><t t-esc="line.cheque_number or ''"/></td>
+                                        <td style="padding: 5px 8px; text-align: right; font-weight: 600;">
+                                            <t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background: #f0f4ff; font-weight: 700;">
+                                    <td colspan="4" style="padding: 8px; text-align: right; font-size: 13px;">
+                                        TOTAL (<t t-esc="o.line_count"/> items)
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; font-size: 14px; color: #0f3460;">
+                                        <t t-esc="o.total_amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- Bank Reference -->
+                        <div t-if="o.bank_reference" style="margin-top: 16px; background: #f0fff4; border-left: 4px solid #28a745; padding: 8px 12px; border-radius: 0 4px 4px 0; font-size: 12px;">
+                            <strong>Bank Reference:</strong> <t t-esc="o.bank_reference"/>
+                            <t t-if="o.confirmed_by_id">
+                                — Confirmed by <t t-esc="o.confirmed_by_id.name"/>
+                                <t t-if="o.confirmation_date"> on <t t-esc="o.confirmation_date" t-options="{'widget': 'date'}"/></t>
+                            </t>
+                        </div>
+
+                        <!-- Signature Lines -->
+                        <div style="margin-top: 30px; display: flex; gap: 40px; font-size: 11px;">
+                            <div style="flex: 1; border-top: 1px solid #333; padding-top: 6px; text-align: center;">
+                                Prepared By: <t t-esc="o.prepared_by_id.name or ''"/>
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #333; padding-top: 6px; text-align: center;">
+                                Verified By: ___________________________
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #333; padding-top: 6px; text-align: center;">
+                                Bank Teller Stamp / Initials
+                            </div>
+                        </div>
+
+                        <!-- Footer Note -->
+                        <div t-if="o.company_id.deposit_slip_footer" style="margin-top: 16px; text-align: center; font-size: 10px; color: #888; border-top: 1px solid #eee; padding-top: 8px;">
+                            <t t-esc="o.company_id.deposit_slip_footer"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

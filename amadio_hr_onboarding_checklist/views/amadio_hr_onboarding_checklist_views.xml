@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_onboarding_template_list" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.list</field>
+        <field name="model">hr.onboarding.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_template_form" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.form</field>
+        <field name="model">hr.onboarding.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Steps" name="step_ids">
+                            <field name="step_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_template_search" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.search</field>
+        <field name="model">hr.onboarding.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hr_onboarding_template" model="ir.actions.act_window">
+        <field name="name">Hr Onboarding Template</field>
+        <field name="res_model">hr.onboarding.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_hr_onboarding_template_step_list" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.step.list</field>
+        <field name="model">hr.onboarding.template.step</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="template_id"/>
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="responsible_role"/>
+                <field name="is_critical"/>
+                <field name="due_days_after_start"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_template_step_form" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.step.form</field>
+        <field name="model">hr.onboarding.template.step</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template_id"/>
+                            <field name="sequence"/>
+                            <field name="responsible_role"/>
+                        </group>
+                        <group>
+                            <field name="is_critical"/>
+                            <field name="due_days_after_start"/>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_template_step_search" model="ir.ui.view">
+        <field name="name">hr.onboarding.template.step.search</field>
+        <field name="model">hr.onboarding.template.step</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hr_onboarding_template_step" model="ir.actions.act_window">
+        <field name="name">Hr Onboarding Template Step</field>
+        <field name="res_model">hr.onboarding.template.step</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_hr_onboarding_checklist_list" model="ir.ui.view">
+        <field name="name">hr.onboarding.checklist.list</field>
+        <field name="model">hr.onboarding.checklist</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_id"/>
+                <field name="template_id"/>
+                <field name="state"/>
+                <field name="start_date"/>
+                <field name="target_completion_date"/>
+                <field name="completion_pct"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_checklist_form" model="ir.ui.view">
+        <field name="name">hr.onboarding.checklist.form</field>
+        <field name="model">hr.onboarding.checklist</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="template_id"/>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="target_completion_date"/>
+                            <field name="completion_pct"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Steps" name="step_ids">
+                            <field name="step_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_checklist_search" model="ir.ui.view">
+        <field name="name">hr.onboarding.checklist.search</field>
+        <field name="model">hr.onboarding.checklist</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <filter name="filter_state_in_progress" string="In Progress" domain="[('state','=','in_progress')]"/>
+                <filter name="filter_state_completed" string="Completed" domain="[('state','=','completed')]"/>
+                <filter name="filter_state_cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_checklist_kanban" model="ir.ui.view">
+        <field name="name">hr.onboarding.checklist.kanban</field>
+        <field name="model">hr.onboarding.checklist</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_hr_onboarding_checklist" model="ir.actions.act_window">
+        <field name="name">Hr Onboarding Checklist</field>
+        <field name="res_model">hr.onboarding.checklist</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+    <record id="view_hr_onboarding_step_list" model="ir.ui.view">
+        <field name="name">hr.onboarding.step.list</field>
+        <field name="model">hr.onboarding.step</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="checklist_id"/>
+                <field name="name"/>
+                <field name="responsible_id"/>
+                <field name="done"/>
+                <field name="done_date"/>
+                <field name="is_critical"/>
+                <field name="due_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_step_form" model="ir.ui.view">
+        <field name="name">hr.onboarding.step.form</field>
+        <field name="model">hr.onboarding.step</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="checklist_id"/>
+                            <field name="responsible_id"/>
+                            <field name="done"/>
+                            <field name="done_date"/>
+                        </group>
+                        <group>
+                            <field name="is_critical"/>
+                            <field name="due_date"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_onboarding_step_search" model="ir.ui.view">
+        <field name="name">hr.onboarding.step.search</field>
+        <field name="model">hr.onboarding.step</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hr_onboarding_step" model="ir.actions.act_window">
+        <field name="name">Hr Onboarding Step</field>
+        <field name="res_model">hr.onboarding.step</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

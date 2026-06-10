@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View for Campaigns -->
+        <record id="donation_campaign_tree" model="ir.ui.view">
+            <field name="name">donation.campaign.tree</field>
+            <field name="model">donation.campaign</field>
+            <field name="arch" type="xml">
+                <tree string="Donation Campaigns">
+                    <field name="name" />
+                    <field name="date_start" />
+                    <field name="date_end" />
+                    <field name="goal_amount" />
+                    <field name="total_raised" sum="Total" />
+                    <field name="progress_percent" widget="progressbar" />
+                    <field name="is_active_campaign" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View for Campaigns -->
+        <record id="donation_campaign_form" model="ir.ui.view">
+            <field name="name">donation.campaign.form</field>
+            <field name="model">donation.campaign</field>
+            <field name="arch" type="xml">
+                <form string="Donation Campaign">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="action" name="nonprofit_donation_mgmt.donation_donation_action" class="oe_stat_button" icon="fa-heart">
+                                <field string="Donations" name="donation_count" widget="statinfo" />
+                            </button>
+                            <button type="action" name="nonprofit_donation_mgmt.donation_donation_action" class="oe_stat_button" icon="fa-money">
+                                <field string="Raised" name="total_raised" widget="statinfo" />
+                            </button>
+                        </div>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                        <div>
+                            <field name="progress_percent" widget="progressbar" />
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_start" />
+                                <field name="date_end" />
+                                <field name="is_active_campaign" />
+                            </group>
+                            <group>
+                                <field name="goal_amount" />
+                                <field name="total_raised" readonly="1" />
+                                <field name="fund_id" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" nolabel="1" />
+                        </group>
+                        <group>
+                            <field name="active" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View for Campaigns -->
+        <record id="donation_campaign_search" model="ir.ui.view">
+            <field name="name">donation.campaign.search</field>
+            <field name="model">donation.campaign</field>
+            <field name="arch" type="xml">
+                <search string="Search Campaigns">
+                    <field name="name" />
+                    <field name="fund_id" />
+                    <separator />
+                    <filter string="Active Now" name="active_now" domain="[('is_active_campaign', '=', True)]" />
+                    <filter string="Active Campaigns" name="active_filter" domain="[('active', '=', True)]" />
+                    <separator />
+                    <group expand="0" string="Group By">
+                        <filter string="Fund" name="group_by_fund" context="{'group_by': 'fund_id'}" />
+                        <filter string="Status" name="group_by_status" context="{'group_by': 'active'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for Campaigns -->
+        <record id="donation_campaign_action" model="ir.actions.act_window">
+            <field name="name">Donation Campaigns</field>
+            <field name="res_model">donation.campaign</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="donation_campaign_search" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No campaigns created yet!</p>
+                <p>Create fundraising campaigns to organize donations by purpose and track progress toward goals.</p>
+            </field>
+        </record>
+
+        <!-- Menu for Campaigns -->
+        <menuitem id="donation_campaign_menu" name="Campaigns" action="donation_campaign_action" parent="donation_donation_menu" sequence="3" />
+
+    </data>
+</odoo>

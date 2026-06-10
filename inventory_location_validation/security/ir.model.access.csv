@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_location_rule_user,stock.location.rule user access,model_stock_location_rule,stock.group_stock_user,1,0,0,0
+access_stock_location_rule_manager,stock.location.rule manager access,model_stock_location_rule,stock.group_stock_manager,1,1,1,1
+access_stock_location_validation_wizard_user,stock.location.validation.wizard user access,model_stock_location_validation_wizard,stock.group_stock_user,1,1,1,0

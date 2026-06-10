@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_smart_mail_template_rule_user,Smart Mail Template Rule - User,model_smart_mail_template_rule,base.group_user,1,0,0,0
+access_smart_mail_template_rule_manager,Smart Mail Template Rule - Manager,model_smart_mail_template_rule,base.group_system,1,1,1,1
+access_smart_mail_template_usage_user,Smart Mail Template Usage - User,model_smart_mail_template_usage,base.group_user,1,0,0,0
+access_smart_mail_template_usage_manager,Smart Mail Template Usage - Manager,model_smart_mail_template_usage,base.group_system,1,1,1,1

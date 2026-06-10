@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit stock.location form view to add pick_sequence field -->
+        <record id="view_location_form_pick_sequence" model="ir.ui.view">
+            <field name="name">stock.location.form.pick.sequence</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id">stock.view_location_form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='location_settings']" position="inside">
+                    <field
+                        name="pick_sequence"
+                        attrs="{'invisible': [('usage', '=', 'internal')]}"
+                    />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Tree view for Pick Sequences (location hierarchy) -->
+        <record id="view_location_tree_pick_sequence" model="ir.ui.view">
+            <field name="name">stock.location.tree.pick.sequence</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" default_order="parent_path, pick_sequence">
+                    <field name="name" readonly="1" />
+                    <field name="complete_name" />
+                    <field name="usage" readonly="1" />
+                    <field name="pick_sequence" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search view for Pick Sequences -->
+        <record id="view_location_search_pick_sequence" model="ir.ui.view">
+            <field name="name">stock.location.search.pick.sequence</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="complete_name" />
+                    <filter
+                        name="internal"
+                        string="Internal Locations"
+                        domain="[('usage', '=', 'internal')]"
+                    />
+                    <filter
+                        name="customer"
+                        string="Customer Locations"
+                        domain="[('usage', '=', 'customer')]"
+                    />
+                    <filter
+                        name="supplier"
+                        string="Supplier Locations"
+                        domain="[('usage', '=', 'supplier')]"
+                    />
+                    <separator />
+                    <filter
+                        name="has_sequence"
+                        string="Has Pick Sequence"
+                        domain="[('pick_sequence', '!=', 0)]"
+                    />
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for Pick Sequences menu -->
+        <record id="action_stock_location_pick_sequence" model="ir.actions.act_window">
+            <field name="name">Pick Sequences</field>
+            <field name="res_model">stock.location</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_location_tree_pick_sequence')}), (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_location_form')})]" />
+            <field name="search_view_id" ref="view_location_search_pick_sequence" />
+            <field name="domain">[]</field>
+            <field name="context">{'default_usage': 'internal'}</field>
+            <field name="help">Configure the picking sequence (shelf order) for warehouse locations. Lower sequence numbers are picked first. This is used to optimize pick paths.</field>
+        </record>
+
+        <!-- Menu item for Pick Sequences -->
+        <menuitem
+            id="menu_stock_location_pick_sequence"
+            name="Pick Sequences"
+            parent="stock.menu_warehouse_config"
+            action="action_stock_location_pick_sequence"
+            sequence="50"
+        />
+    </data>
+</odoo>

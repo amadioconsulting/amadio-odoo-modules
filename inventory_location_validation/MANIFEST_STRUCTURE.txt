@@ -1,0 +1,28 @@
+inventory_location_validation/
+├── __init__.py                          (package init, imports models)
+├── __manifest__.py                      (module metadata, dependencies, views data)
+├── README.md                            (user documentation)
+├── DEPLOYMENT.md                        (installation & deployment guide)
+├── MANIFEST_STRUCTURE.txt              (this file)
+│
+├── models/
+│   ├── __init__.py                      (imports: stock_location_rule, stock_picking, wizard)
+│   ├── stock_location_rule.py           (defines stock.location.rule model with violation checking)
+│   ├── stock_picking.py                 (inherits stock.picking, overrides button_validate)
+│   └── stock_location_validation_wizard.py  (transient model for violation confirmation)
+│
+├── views/
+│   ├── stock_location_rule_views.xml    (tree, form, search views + menu for rules management)
+│   ├── stock_picking_views.xml          (inherits stock.picking form, adds violation banner)
+│   └── stock_location_validation_wizard_views.xml  (wizard form with confirm/cancel buttons)
+│
+├── security/
+│   └── ir.model.access.csv              (access control: user=read, manager=full)
+│
+└── static/
+    └── description/
+        └── icon.png                     (module icon for Odoo App Store)
+
+TOTAL FILES: 13
+KEY MODELS: 3 (stock.location.rule, stock.picking inherits, stock.location.validation.wizard)
+XML VIEWS: 8 (tree, form, search for rules + form for wizard + inherited form for picking)

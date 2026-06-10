@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_reminder_sequence_list" model="ir.ui.view">
+        <field name="name">account.reminder.sequence.list</field>
+        <field name="model">account.reminder.sequence</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_sequence_form" model="ir.ui.view">
+        <field name="name">account.reminder.sequence.form</field>
+        <field name="model">account.reminder.sequence</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Stages" name="stage_ids">
+                            <field name="stage_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_sequence_search" model="ir.ui.view">
+        <field name="name">account.reminder.sequence.search</field>
+        <field name="model">account.reminder.sequence</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_reminder_sequence" model="ir.actions.act_window">
+        <field name="name">Account Reminder Sequence</field>
+        <field name="res_model">account.reminder.sequence</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_account_reminder_stage_list" model="ir.ui.view">
+        <field name="name">account.reminder.stage.list</field>
+        <field name="model">account.reminder.stage</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence_id"/>
+                <field name="name"/>
+                <field name="days_overdue"/>
+                <field name="email_template_id"/>
+                <field name="send_copy_to_ids" widget="many2many_tags"/>
+                <field name="escalate_to_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_stage_form" model="ir.ui.view">
+        <field name="name">account.reminder.stage.form</field>
+        <field name="model">account.reminder.stage</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence_id"/>
+                            <field name="days_overdue"/>
+                            <field name="email_template_id"/>
+                        </group>
+                        <group>
+                            <field name="send_copy_to_ids" widget="many2many_tags"/>
+                            <field name="escalate_to_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_stage_search" model="ir.ui.view">
+        <field name="name">account.reminder.stage.search</field>
+        <field name="model">account.reminder.stage</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_reminder_stage" model="ir.actions.act_window">
+        <field name="name">Account Reminder Stage</field>
+        <field name="res_model">account.reminder.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_account_reminder_log_list" model="ir.ui.view">
+        <field name="name">account.reminder.log.list</field>
+        <field name="model">account.reminder.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="move_id"/>
+                <field name="stage_id"/>
+                <field name="sent_date"/>
+                <field name="sent_by_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_log_form" model="ir.ui.view">
+        <field name="name">account.reminder.log.form</field>
+        <field name="model">account.reminder.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="move_id"/>
+                            <field name="stage_id"/>
+                            <field name="sent_date"/>
+                        </group>
+                        <group>
+                            <field name="sent_by_id"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_reminder_log_search" model="ir.ui.view">
+        <field name="name">account.reminder.log.search</field>
+        <field name="model">account.reminder.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="move_id"/>
+                <field name="stage_id"/>
+                <field name="sent_by_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_reminder_log" model="ir.actions.act_window">
+        <field name="name">Account Reminder Log</field>
+        <field name="res_model">account.reminder.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

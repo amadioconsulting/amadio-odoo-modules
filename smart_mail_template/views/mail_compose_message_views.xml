@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit mail.compose.message form and inject smart suggestions -->
+        <record id="view_mail_compose_message_smart_suggestions" model="ir.ui.view">
+            <field name="name">mail.compose.message - Smart Suggestions</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id">mail.compose.form</field>
+            <field name="arch" type="xml">
+
+                <!-- Find the template_id field and inject smart suggestions above it -->
+                <xpath expr="//field[@name='template_id']" position="before">
+
+                    <!-- Smart Suggestions Section -->
+                    <div class="alert alert-info" role="alert"
+                        attrs="{'invisible': [('smart_suggested_template_ids', '=', [])]}">
+                        <strong>Smart Suggestions</strong> – Click to apply:
+                    </div>
+
+                    <!-- Suggested template buttons -->
+                    <div class="row mb-2" attrs="{'invisible': [('smart_suggested_template_ids', '=', [])]}">
+                        <div class="col-12">
+                            <field name="smart_suggested_template_ids" nolabel="1">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                        </div>
+                    </div>
+
+                    <!-- Recently Used Section (optional) -->
+                    <div class="alert alert-light" role="alert"
+                        attrs="{'invisible': [('smart_recently_used_template_ids', '=', [])]}">
+                        <strong>Recently Used</strong> – Quick access:
+                    </div>
+
+                    <div class="row mb-3" attrs="{'invisible': [('smart_recently_used_template_ids', '=', [])]}">
+                        <div class="col-12">
+                            <field name="smart_recently_used_template_ids" nolabel="1">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                        </div>
+                    </div>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

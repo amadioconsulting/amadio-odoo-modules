@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_document_version_user,document.version user access,model_document_version,base.group_user,1,1,1,0
+access_document_version_manager,document.version manager access,model_document_version,base.group_system,1,1,1,1
+access_document_version_upload_wizard_user,document.version.upload.wizard user access,model_document_version_upload_wizard,base.group_user,1,1,1,0

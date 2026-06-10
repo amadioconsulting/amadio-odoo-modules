@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bank_deposit_user,bank.deposit user,model_bank_deposit,account.group_account_user,1,1,1,0
+access_bank_deposit_manager,bank.deposit manager,model_bank_deposit,account.group_account_manager,1,1,1,1
+access_bank_deposit_line_user,bank.deposit.line user,model_bank_deposit_line,account.group_account_user,1,1,1,0
+access_bank_deposit_line_manager,bank.deposit.line manager,model_bank_deposit_line,account.group_account_manager,1,1,1,1
+access_bank_deposit_wizard_user,bank.deposit.add.payment.wizard user,model_bank_deposit_add_payment_wizard,account.group_account_user,1,1,1,1

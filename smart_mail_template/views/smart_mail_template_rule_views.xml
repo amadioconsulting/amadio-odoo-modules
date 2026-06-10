@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree view -->
+        <record id="smart_mail_template_rule_tree" model="ir.ui.view">
+            <field name="name">Smart Mail Template Rule Tree</field>
+            <field name="model">smart.mail.template.rule</field>
+            <field name="arch" type="xml">
+                <tree string="Smart Template Rules" default_order="priority desc">
+                    <field name="model_id" />
+                    <field name="stage_field" />
+                    <field name="stage_value" />
+                    <field name="template_id" />
+                    <field name="priority" />
+                    <field name="active" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="smart_mail_template_rule_form" model="ir.ui.view">
+            <field name="name">Smart Mail Template Rule Form</field>
+            <field name="model">smart.mail.template.rule</field>
+            <field name="arch" type="xml">
+                <form string="Smart Mail Template Rule">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="active" widget="boolean_toggle" />
+                                <field name="model_id" class="oe_inline" required="1" />
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Rule Configuration">
+                                <field name="template_id" required="1" />
+                                <field name="priority" widget="integer" />
+                                <field name="usage_multiplier" />
+                            </group>
+
+                            <group string="Stage Matching (Optional)">
+                                <field name="stage_field" placeholder="e.g., state, stage_id" />
+                                <field name="stage_value" placeholder="e.g., confirmed, 1" />
+                            </group>
+                        </group>
+
+                        <group string="Notes">
+                            <field name="notes" nolabel="1" />
+                        </group>
+
+                        <group>
+                            <field name="created_date" readonly="1" />
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view -->
+        <record id="smart_mail_template_rule_search" model="ir.ui.view">
+            <field name="name">Smart Mail Template Rule Search</field>
+            <field name="model">smart.mail.template.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search Smart Mail Template Rules">
+                    <field name="model_id" />
+                    <field name="template_id" />
+                    <field name="stage_field" />
+                    <field name="stage_value" />
+
+                    <separator />
+
+                    <filter name="active" string="Active" domain="[('active', '=', True)]" />
+                    <filter name="inactive" string="Inactive" domain="[('active', '=', False)]" />
+
+                    <separator />
+
+                    <filter name="high_priority" string="High Priority (≥75)"
+                        domain="[('priority', '>=', 75)]" />
+                    <filter name="medium_priority" string="Medium Priority (50–74)"
+                        domain="[('priority', '&lt;', 75), ('priority', '>=', 50)]" />
+                    <filter name="low_priority" string="Low Priority (&lt;50)"
+                        domain="[('priority', '&lt;', 50)]" />
+
+                    <separator />
+
+                    <filter name="with_stage" string="With Stage Filter"
+                        domain="[('stage_field', '!=', False)]" />
+                    <filter name="without_stage" string="Without Stage Filter"
+                        domain="[('stage_field', '=', False)]" />
+
+                    <group expand="0" string="Group By">
+                        <filter name="by_model" string="Model"
+                            context="{'group_by': 'model_id'}" />
+                        <filter name="by_template" string="Template"
+                            context="{'group_by': 'template_id'}" />
+                        <filter name="by_priority" string="Priority"
+                            context="{'group_by': 'priority'}" />
+                        <filter name="by_active" string="Status"
+                            context="{'group_by': 'active'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="smart_mail_template_rule_action" model="ir.actions.act_window">
+            <field name="name">Smart Template Rules</field>
+            <field name="res_model">smart.mail.template.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="smart_mail_template_rule_search" />
+            <field name="help">Configure which email templates are suggested for specific models and stages. Higher priority templates appear first in suggestions.</field>
+        </record>
+
+        <!-- Menu item -->
+        <menuitem
+            id="smart_mail_template_rule_menu"
+            name="Smart Template Rules"
+            parent="mail.mail_settings_menu"
+            action="smart_mail_template_rule_action"
+            sequence="10"
+        />
+
+        <!-- Usage tracking tree view -->
+        <record id="smart_mail_template_usage_tree" model="ir.ui.view">
+            <field name="name">Smart Mail Template Usage Tree</field>
+            <field name="model">smart.mail.template.usage</field>
+            <field name="arch" type="xml">
+                <tree string="Template Usage" default_order="last_used desc">
+                    <field name="template_id" />
+                    <field name="user_id" />
+                    <field name="use_count" />
+                    <field name="last_used" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Usage tracking form view -->
+        <record id="smart_mail_template_usage_form" model="ir.ui.view">
+            <field name="name">Smart Mail Template Usage Form</field>
+            <field name="model">smart.mail.template.usage</field>
+            <field name="arch" type="xml">
+                <form string="Template Usage">
+                    <sheet>
+                        <group>
+                            <field name="template_id" />
+                            <field name="user_id" />
+                            <field name="use_count" />
+                            <field name="last_used" />
+                            <field name="created_date" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Usage tracking search view -->
+        <record id="smart_mail_template_usage_search" model="ir.ui.view">
+            <field name="name">Smart Mail Template Usage Search</field>
+            <field name="model">smart.mail.template.usage</field>
+            <field name="arch" type="xml">
+                <search string="Search Template Usage">
+                    <field name="template_id" />
+                    <field name="user_id" />
+
+                    <separator />
+
+                    <filter name="this_week" string="Used This Week"
+                        domain="[('last_used', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d'))]" />
+                    <filter name="this_month" string="Used This Month"
+                        domain="[('last_used', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]" />
+
+                    <group expand="0" string="Group By">
+                        <filter name="by_user" string="User"
+                            context="{'group_by': 'user_id'}" />
+                        <filter name="by_template" string="Template"
+                            context="{'group_by': 'template_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Usage tracking action -->
+        <record id="smart_mail_template_usage_action" model="ir.actions.act_window">
+            <field name="name">Template Usage Analytics</field>
+            <field name="res_model">smart.mail.template.usage</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="smart_mail_template_usage_search" />
+            <field name="help">View usage statistics: which templates are used most frequently and recently by each user.</field>
+        </record>
+
+        <!-- Menu item for analytics -->
+        <menuitem
+            id="smart_mail_template_usage_menu"
+            name="Template Usage Analytics"
+            parent="mail.mail_settings_menu"
+            action="smart_mail_template_usage_action"
+            sequence="11"
+        />
+
+    </data>
+</odoo>

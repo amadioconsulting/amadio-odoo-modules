@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_donation_user,donation.donation.user,model_donation_donation,base.group_user,1,1,1,1
+access_donation_fund_user,donation.fund.user,model_donation_fund,base.group_user,1,1,1,1
+access_donation_campaign_user,donation.campaign.user,model_donation_campaign,base.group_user,1,1,1,1
+access_donation_year_end_wizard_user,donation.year.end.wizard.user,model_donation_year_end_wizard,base.group_user,1,1,1,1
+access_donation_donation_manager,donation.donation.manager,model_donation_donation,base.group_system,1,1,1,1
+access_donation_fund_manager,donation.fund.manager,model_donation_fund,base.group_system,1,1,1,1
+access_donation_campaign_manager,donation.campaign.manager,model_donation_campaign,base.group_system,1,1,1,1

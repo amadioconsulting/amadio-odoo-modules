@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_reminder_sequence_user,account.reminder.sequence user,model_account_reminder_sequence,base.group_user,1,1,1,1
+access_account_reminder_stage_user,account.reminder.stage user,model_account_reminder_stage,base.group_user,1,1,1,1
+access_account_reminder_log_user,account.reminder.log user,model_account_reminder_log,base.group_user,1,1,1,1

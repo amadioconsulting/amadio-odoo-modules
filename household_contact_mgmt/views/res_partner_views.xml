@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend partner form with household fields -->
+    <record id="view_partner_form_household" model="ir.ui.view">
+        <field name="name">res.partner.form.household</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="contacts.res_partner_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="household_id" widget="many2one_avatar"/>
+                <field name="household_role" invisible="not household_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend partner list with household column -->
+    <record id="view_partner_list_household" model="ir.ui.view">
+        <field name="name">res.partner.list.household</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="contacts.res_partner_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='city']" position="after">
+                <field name="household_display_name" string="Household" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

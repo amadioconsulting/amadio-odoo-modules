@@ -1,6 +1,6 @@
 {
     "name": "Contract Lifecycle Mgr",
-    "version": "18.0.1.0.2",
+    "version": "18.0.1.0.3",
     "category": "Sales",
     "sequence": 1,
     "author": "AMADIO",
@@ -10,14 +10,15 @@
     "currency": "EUR",
     "depends": ["sale", "mail"],
     "data": [
-        "ir.model.access.csv",
-        "contract_views.xml",
-        "contract_menu.xml",
+        "security/ir.model.access.csv",
+        "views/contract_views.xml",
+        "views/contract_menu.xml",
     ],
     "installable": True,
     "auto_install": False,
     "application": True,
     "summary": "Centralized contract tracking with renewal alerts. Configure notice periods, auto-alert owners and legal teams before expiry. Track amendments, parties, value, and auto-renew clauses.",
     "description": "Centralized contract tracking with renewal alerts. Configure notice periods, auto-alert owners and legal teams before expiry. Track amendments, parties, value, and auto-renew clauses.",
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

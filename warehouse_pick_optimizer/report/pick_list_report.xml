@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Optimized Pick List Report -->
+        <report
+            id="report_optimized_pick_list"
+            model="stock.picking"
+            string="Optimized Pick List"
+            report_type="qweb-pdf"
+            name="warehouse_pick_optimizer.report_optimized_pick_list"
+            file="warehouse_pick_optimizer.report_optimized_pick_list"
+        />
+
+        <!-- QWeb Template for Optimized Pick List PDF -->
+        <template id="report_optimized_pick_list">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="picking">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <!-- Header Section -->
+                            <div class="row mb-4">
+                                <div class="col-8">
+                                    <h2>
+                                        <strong>Optimized Pick List</strong>
+                                    </h2>
+                                    <p>
+                                        <strong>Picking Reference:</strong>
+                                        <t t-esc="picking.name" />
+                                    </p>
+                                    <p>
+                                        <strong>Picking Date:</strong>
+                                        <t t-esc="picking.scheduled_date.strftime('%Y-%m-%d %H:%M')" />
+                                    </p>
+                                    <p>
+                                        <strong>Operator:</strong>
+                                        <t t-esc="picking.user_id.name or 'Not assigned'" />
+                                    </p>
+                                    <p>
+                                        <strong>Source Location:</strong>
+                                        <t t-esc="picking.location_id.complete_name" />
+                                    </p>
+                                    <p>
+                                        <strong>Destination Location:</strong>
+                                        <t t-esc="picking.location_dest_id.complete_name" />
+                                    </p>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <img
+                                        src="/logo.png"
+                                        style="max-height: 100px;"
+                                        alt="Company Logo"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Move Lines Table -->
+                            <table class="table table-sm table-bordered mt-4">
+                                <thead>
+                                    <tr style="background-color: #f5f5f5;">
+                                        <th style="width: 5%;">
+                                            <strong>#</strong>
+                                        </th>
+                                        <th style="width: 20%;">
+                                            <strong>Product</strong>
+                                        </th>
+                                        <th style="width: 12%;">
+                                            <strong>Barcode</strong>
+                                        </th>
+                                        <th style="width: 10%;">
+                                            <strong>Lot/Serial</strong>
+                                        </th>
+                                        <th style="width: 8%;">
+                                            <strong>Qty</strong>
+                                        </th>
+                                        <th style="width: 18%;">
+                                            <strong>From Location</strong>
+                                        </th>
+                                        <th style="width: 18%;">
+                                            <strong>To Location</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="line_counter" t-value="0" />
+                                    <t t-foreach="picking._get_optimized_move_lines()" t-as="line">
+                                        <t t-set="line_counter" t-value="line_counter + 1" />
+                                        <tr>
+                                            <td>
+                                                <t t-esc="line_counter" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_id.name" />
+                                            </td>
+                                            <td>
+                                                <t t-if="line.product_id.barcode">
+                                                    <barcode
+                                                        symbology="code128"
+                                                        value="line.product_id.barcode"
+                                                    />
+                                                    <br />
+                                                    <small>
+                                                        <t t-esc="line.product_id.barcode" />
+                                                    </small>
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="color: #999;">No barcode</span>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="line.lot_id">
+                                                    <strong>Lot:</strong>
+                                                    <t t-esc="line.lot_id.name" />
+                                                </t>
+                                                <t t-elif="line.lot_name">
+                                                    <strong>Lot:</strong>
+                                                    <t t-esc="line.lot_name" />
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="color: #999;">—</span>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.qty_done" />
+                                                <t t-esc="line.product_uom_id.name" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.location_id.complete_name" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.location_dest_id.complete_name" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <!-- Footer -->
+                            <div class="row mt-5">
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Operator Signature:</strong>
+                                    </p>
+                                    <br />
+                                    <br />
+                                    <p>_________________________</p>
+                                </div>
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Warehouse Manager Signature:</strong>
+                                    </p>
+                                    <br />
+                                    <br />
+                                    <p>_________________________</p>
+                                </div>
+                            </div>
+
+                            <p style="margin-top: 3rem; font-size: 10px; color: #999;">
+                                Generated by Warehouse Pick Path Optimizer for Odoo 18.0
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

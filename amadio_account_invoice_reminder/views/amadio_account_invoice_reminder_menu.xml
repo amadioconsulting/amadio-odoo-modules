@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_account_invoice_reminder_root" name="Account Invoice Reminder" sequence="60"/>
+
+    <menuitem id="menu_amadio_account_invoice_reminder_operations" name="Operations"
+              parent="menu_amadio_account_invoice_reminder_root" sequence="10"/>
+
+    <menuitem id="menu_account_reminder_sequence" name="Account Reminder Sequence"
+              parent="menu_amadio_account_invoice_reminder_operations"
+              action="action_account_reminder_sequence" sequence="10"/>
+
+    <menuitem id="menu_account_reminder_stage" name="Account Reminder Stage"
+              parent="menu_amadio_account_invoice_reminder_operations"
+              action="action_account_reminder_stage" sequence="20"/>
+
+    <menuitem id="menu_account_reminder_log" name="Account Reminder Log"
+              parent="menu_amadio_account_invoice_reminder_operations"
+              action="action_account_reminder_log" sequence="30"/>
+
+</odoo>

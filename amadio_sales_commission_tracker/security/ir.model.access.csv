@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_plan_user,commission.plan user,model_commission_plan,base.group_user,1,1,1,1
+access_commission_rule_user,commission.rule user,model_commission_rule,base.group_user,1,1,1,1
+access_commission_statement_user,commission.statement user,model_commission_statement,base.group_user,1,1,1,1
+access_commission_statement_line_user,commission.statement.line user,model_commission_statement_line,base.group_user,1,1,1,1

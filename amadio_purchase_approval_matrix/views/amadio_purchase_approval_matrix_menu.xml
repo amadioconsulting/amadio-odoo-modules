@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_purchase_approval_matrix_root" name="Purchase Approval Matrix" sequence="60"/>
+
+    <menuitem id="menu_amadio_purchase_approval_matrix_operations" name="Operations"
+              parent="menu_amadio_purchase_approval_matrix_root" sequence="10"/>
+
+    <menuitem id="menu_purchase_approval_tier" name="Purchase Approval Tier"
+              parent="menu_amadio_purchase_approval_matrix_operations"
+              action="action_purchase_approval_tier" sequence="10"/>
+
+    <menuitem id="menu_purchase_approval_log" name="Purchase Approval Log"
+              parent="menu_amadio_purchase_approval_matrix_operations"
+              action="action_purchase_approval_log" sequence="20"/>
+
+</odoo>

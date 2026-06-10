@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_amadio_vendor_performance_scorecard_root" name="Vendor Performance Scorecard" sequence="60"/>
+
+    <menuitem id="menu_amadio_vendor_performance_scorecard_operations" name="Operations"
+              parent="menu_amadio_vendor_performance_scorecard_root" sequence="10"/>
+
+    <menuitem id="menu_vendor_scorecard" name="Vendor Scorecard"
+              parent="menu_amadio_vendor_performance_scorecard_operations"
+              action="action_vendor_scorecard" sequence="10"/>
+
+    <menuitem id="menu_vendor_scorecard_criterion" name="Vendor Scorecard Criterion"
+              parent="menu_amadio_vendor_performance_scorecard_operations"
+              action="action_vendor_scorecard_criterion" sequence="20"/>
+
+</odoo>

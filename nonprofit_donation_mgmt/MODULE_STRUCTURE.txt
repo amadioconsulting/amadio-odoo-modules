@@ -1,0 +1,296 @@
+NONPROFIT DONATION MANAGEMENT - MODULE STRUCTURE
+================================================
+
+Module Root: /sessions/amazing-lucid-curie/module_build/nonprofit_donation_mgmt/
+
+DIRECTORY TREE
+--------------
+
+nonprofit_donation_mgmt/
+├── __init__.py                           - Module initialization (imports models)
+├── __manifest__.py                       - Module metadata, dependencies, data
+├── README.md                             - Full documentation
+├── INSTALLATION.md                       - Setup & quick start guide
+├── MODULE_STRUCTURE.txt                  - This file
+│
+├── models/
+│   ├── __init__.py                       - Models package init
+│   ├── donation_fund.py                  - Donation.fund model (restricted purposes)
+│   ├── donation_campaign.py              - Donation.campaign model (fundraising)
+│   ├── donation_donation.py              - Donation.donation model (core)
+│   └── donation_year_end_wizard.py       - Year-end statement wizard
+│
+├── views/
+│   ├── donation_donation_views.xml       - Forms, trees, pivot, kanban for donations
+│   ├── donation_fund_views.xml           - Forms, trees for funds
+│   ├── donation_campaign_views.xml       - Forms, trees for campaigns
+│   └── donation_year_end_wizard_views.xml - Wizard form & menu actions
+│
+├── report/
+│   └── donation_receipt_report.xml       - PDF receipt & year-end statement templates
+│
+├── data/
+│   └── donation_sequence.xml             - Sequence definitions (reference, receipt #)
+│
+├── security/
+│   └── ir.model.access.csv               - User group permissions
+│
+└── static/
+    └── description/
+        └── icon.png                      - Module icon (placeholder)
+
+
+FILE DESCRIPTIONS
+-----------------
+
+Core Python Models (models/)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+donation_fund.py:
+  - Model: donation.fund
+  - Fields: name, code, description, account_id, active
+  - Computed: donation_count, total_amount, currency_id
+  - Purpose: Tracks restricted funds/purposes for donations
+
+donation_campaign.py:
+  - Model: donation.campaign
+  - Fields: name, date_start, date_end, goal_amount, fund_id, description, active
+  - Computed: total_raised, donation_count, progress_percent, is_active_campaign
+  - Purpose: Tracks fundraising campaigns with progress
+
+donation_donation.py:
+  - Model: donation.donation
+  - Fields: donor_id, date, amount, currency_id, payment_method, cheque_number,
+            fund_id, campaign_id, reference, receipt_number, state, note,
+            journal_id, move_id
+  - Methods: action_confirm(), action_generate_receipt(), action_post_to_accounting(),
+             action_view_accounting_entry(), action_set_to_draft(), action_print_receipt()
+  - Purpose: Core donation record with full workflow
+
+donation_year_end_wizard.py:
+  - Model: donation.year.end.wizard (TransientModel)
+  - Fields: donor_id, year, total_donations, donation_count
+  - Methods: action_generate_statement(), action_generate_csv()
+  - Purpose: Wizard to generate year-end PDF statements
+
+View XML Files (views/)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+donation_donation_views.xml:
+  - Contains: Tree, Form, Search, Pivot, Kanban views for donations
+  - Menu: Main "Donations" menu with action
+  - Features: Status buttons, workflow, GL entry view
+
+donation_fund_views.xml:
+  - Contains: Tree, Form, Search views for funds
+  - Menu: "Funds" submenu under Donations
+  - Features: Stat buttons for donation count & total raised
+
+donation_campaign_views.xml:
+  - Contains: Tree, Form, Search views for campaigns
+  - Menu: "Campaigns" submenu under Donations
+  - Features: Progress bar widget, active campaign tracking
+
+donation_year_end_wizard_views.xml:
+  - Contains: Form view for wizard
+  - Menu: "Reports > Year-End Statements" submenu
+  - Features: Donor/year selection, summary display
+
+Report XML Files (report/)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+donation_receipt_report.xml:
+  - Report: nonprofit_donation_mgmt.report_donation_receipt
+  - Template: report_donation_receipt_template (QWeb)
+  - Output: Professional PDF receipt with:
+    * Organization letterhead placeholder
+    * Donation details
+    * Donor information
+    * Amount in figures
+    * Tax deduction notice
+    * Signature line
+
+  - Report: nonprofit_donation_mgmt.report_donation_year_end
+  - Template: report_donation_year_end_template (QWeb)
+  - Output: Annual donor statement with:
+    * All donations for year
+    * Donation table (date, ref, fund, amount)
+    * Total summary
+    * Tax notice
+
+Data XML Files (data/)
+~~~~~~~~~~~~~~~~~~~~~~
+
+donation_sequence.xml:
+  - Sequence: seq_donation_donation
+    Prefix: DON-%(year)s-
+    Padding: 5 digits
+    Usage: Auto-generates donation reference numbers
+  
+  - Sequence: seq_donation_receipt
+    Prefix: RCP-%(year)s-
+    Padding: 6 digits
+    Usage: Auto-generates receipt numbers
+
+Security Files (security/)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ir.model.access.csv:
+  - Read, Write, Create, Unlink permissions
+  - For: donation.donation, donation.fund, donation.campaign, donation.year.end.wizard
+  - Groups: base.group_user (regular users), base.group_system (admins)
+
+
+KEY FEATURES IMPLEMENTED
+------------------------
+
+✓ Multi-method donation tracking (cash, cheque, etransfer, card, other)
+✓ Donor management with donation history
+✓ Donation fund/purpose tracking
+✓ Fundraising campaigns with progress
+✓ Tax receipt generation (PDF, Canadian-ready)
+✓ Year-end giving statements
+✓ GL accounting integration (optional)
+✓ Donation workflow (Draft → Confirmed → Receipted)
+✓ Automatic reference & receipt numbering
+✓ Search & filtering by donor, date, fund, campaign, state
+✓ Pivot analysis views
+✓ Kanban workflow visualization
+✓ Message threading & activity tracking
+✓ Full audit trail (create_date, write_uid, etc.)
+✓ Cheque number tracking & duplicate prevention
+✓ GL account linking per fund
+✓ Journal entry creation from donations
+
+
+WORKFLOW STATES
+---------------
+
+Draft:
+  - Initial state
+  - Can edit all fields
+  - Not counted in reports
+  - Can reset to draft
+
+Confirmed:
+  - Validated donation
+  - Reference number assigned
+  - Can generate receipt
+  - Can post to accounting
+  - Cannot edit donor/amount
+
+Receipted:
+  - Receipt generated
+  - Receipt number assigned
+  - Can print receipt
+  - Can view GL entry
+  - Final state
+
+
+DEPENDENCIES
+------------
+
+Required (declared in __manifest__.py):
+  - account: For GL posting, journal, chart of accounts
+  - mail: For message threads, activity tracking
+
+Soft Dependencies (features degrade if not installed):
+  - None (module is self-contained)
+
+
+DATABASE TABLES CREATED
+-----------------------
+
+donation_fund          - Restricted fund definitions
+donation_campaign      - Fundraising campaigns
+donation_donation      - Individual donations (main table)
+donation_year_end_wizard - Transient (session-based, not persisted)
+
+Related tables used (not created):
+- res.partner          - Donors
+- res.currency         - Currency selection
+- account.account      - GL accounts for funds
+- account.journal      - Bank/cash journals
+- account.move         - GL entries from donations
+- ir.sequence          - Reference & receipt number generation
+
+
+MENU HIERARCHY
+--------------
+
+Donations (Main Menu)
+├── Donations (List donations)
+├── Funds (Manage donation purposes)
+├── Campaigns (Manage fundraising campaigns)
+└── Reports (Reporting submenu)
+    └── Year-End Statements (Generate donor statements)
+
+
+SECURITY GROUPS
+---------------
+
+base.group_user:
+  - Full read/write/create access to all models
+  - Can view, create, edit donations, funds, campaigns
+  - Can generate receipts and reports
+
+base.group_system:
+  - Admin access to all models
+  - Full permissions
+
+
+TESTING CHECKLIST
+-----------------
+
+□ Create fund successfully
+□ Create campaign successfully  
+□ Create donation in draft state
+□ Confirm donation (reference assigned)
+□ Generate receipt (receipt number assigned)
+□ Print receipt PDF
+□ Post to accounting (GL entry created)
+□ View GL entry from donation
+□ Reset to draft (if no GL entry)
+□ Generate year-end statement
+□ Search/filter donations
+□ View pivot analysis
+□ Verify Kanban workflow view
+
+
+CUSTOMIZATION POINTS
+--------------------
+
+1. Add custom fields to donation.donation model
+2. Extend receipt PDF template with logo/colors
+3. Override action_confirm() for custom validation
+4. Add custom workflows via state selection
+5. Create computed fields for analytics
+6. Extend year-end report with additional data
+7. Create custom views for specific use cases
+8. Hook into donation confirmation for automations
+
+
+LIMITS & CONSIDERATIONS
+-----------------------
+
+- Reference numbers reset yearly (can modify in sequence)
+- Single currency per company (no multi-currency donations)
+- GL posting requires account module
+- Year-end statements generated on-demand (not scheduled)
+- No built-in recurring/pledge system (can add separately)
+- No donation online form (web contact form can integrate)
+- Receipt PDF uses company letterhead (configure company info)
+
+
+NOTES FOR DEVELOPERS
+--------------------
+
+- All models inherit mail.thread for messaging
+- Full datetime tracking on all records
+- Constraints: reference unique, amount positive, cheque unique per donor
+- Computed fields auto-recalculate on model changes
+- Report templates use Jinja2 + QWeb syntax
+- Security via CSV ACL (not record rules)
+- No demo data included (populate manually)
+- Multi-language ready (field labels are translatable)
+
